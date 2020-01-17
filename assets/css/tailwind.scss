@@ -1,0 +1,68 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+button,
+a,
+svg{
+    outline: none;
+}
+
+button:focus,
+a:focus,
+svg:focus{
+    outline: none
+}
+
+svg{
+    @apply overflow-visible;
+}
+
+#message::placeholder{
+    @apply text-light-gray opacity-100;
+}
+
+#email::placeholder,
+#subject::placeholder{
+    @apply text-gray opacity-100;
+}
+
+@variants before, after{
+    .border-triangle{
+        border-left: 12px solid transparent;
+        border-right: 12px solid transparent;
+        border-top: 12px solid #414141;
+    }
+    .empty-content{
+        content: "";
+    }
+}
+
+.shake{
+    animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
+    @keyframes shake {
+        10%, 90% {
+            transform: translateX(-1px);
+        }
+        
+        20%, 80% {
+            transform: translateX(2px);
+        }
+        
+        30%, 50%, 70% {
+            transform: translateX(-2px);
+        }
+        
+        40%, 60% {
+            transform: translateX(1px);
+        }
+    }
+}

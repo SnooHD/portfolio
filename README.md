@@ -1,6 +1,6 @@
 # My portfolio
 
-> Build with [Nuxt.js](https://github.com/nuxt/nuxt.js)
+> Build with [Nuxt.js](https://github.com/nuxt/nuxt.js)  
 > Have a look here: [portfolio.logopicker.com/](https://portfolio.logopicker.com/)
 
 ## Build Setup

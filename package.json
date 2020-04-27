@@ -1,9 +1,10 @@
 {
   "name": "snoo",
   "version": "1.0.0",
-  "description": "none",
+  "description": "My portfolio",
+  "homepage": "https://portfolio.logopicker.com/",
   "author": "Snoo",
-  "private": true,
+  "private": false,
   "scripts": {
     "dev": "nuxt",
     "build": "nuxt build",

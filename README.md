@@ -21,3 +21,7 @@ $ npm run generate
 ```
 
 For detailed explanation on how things work, checkout [Nuxt.js docs](https://nuxtjs.org).
+
+## License
+
+[MIT](https://github.com/nuxt/nuxt.js/blob/dev/LICENSE)

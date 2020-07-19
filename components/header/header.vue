@@ -1,9 +1,7 @@
 <template>
 <header id="home">
     <div class="flex flex-row justify-end">
-        <!-- <logo :mobileMenu="mobileMenu" /> -->
         <div>
-            <!-- <div v-if="$mq !== 'lg' && $mq !== 'xl'" class="fixed top-0 right-0 w-screen h-screen bg-blue-mid z-10"></div> -->
             <blob :class="[`
                 absolute
                 top-0
@@ -35,12 +33,6 @@
                     <svg class="w-10 sm:w-12" height="45" viewBox="4 1 16 10" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <rect width="16px" height="1.75" transform="matrix(-1 0 0 1 16 0)" fill="white"/>
                         <rect width="12px" height="1.75" transform="matrix(-1 0 0 1 16 4.5)" fill="white"/>
-                        <!--
-                            :class="[
-                                'transition-all',
-                                mobileMenu ? 'w-16px' : 'w-8px'
-                            ]" 
-                        -->
                         <rect 
                             width="8px"
                             height="1.75" transform="matrix(-1 0 0 1 16 9)" fill="white"/>
@@ -90,7 +82,6 @@
 </template>
 
 <script>
-import logo from './logo/logo.vue';
 import menuBlock from './menu/menu.vue';
 import blob from './blob/blob.vue';
 
@@ -101,7 +92,6 @@ export default {
         }
     },
     components: {
-        logo,
         menuBlock,
         blob
     }

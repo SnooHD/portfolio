@@ -80,6 +80,7 @@ module.exports = {
   },
   generate: {
     routes: [
+      '404',
       '/design/logopicker',
       '/design/pwrful',
       '/design/influence',

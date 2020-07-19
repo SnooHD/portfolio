@@ -15,17 +15,13 @@
   },
   "dependencies": {
     "@nuxtjs/axios": "^5.10.2",
-    "@nuxtjs/google-analytics": "^2.2.3",
-    "@nuxtjs/sitemap": "^2.2.1",
     "cross-env": "^7.0.2",
     "nuxt": "^2.12.2",
     "nuxt-mq": "^2.0.1",
-    "nuxt-webfontloader": "^1.1.0",
     "tailwindcss-interaction-variants": "^4.0.0",
     "tailwindcss-transforms": "^2.2.0",
     "tailwindcss-transitions": "^2.2.0",
-    "vue-scrollto": "^2.18.1",
-    "vue2-touch-events": "^2.2.1"
+    "vue-scrollto": "^2.18.1"
   },
   "devDependencies": {
     "@nuxtjs/eslint-config": "^2.0.2",

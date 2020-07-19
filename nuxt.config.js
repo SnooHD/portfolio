@@ -42,16 +42,13 @@ module.exports = {
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
-    '@nuxtjs/google-analytics',
     'nuxt-mq',
-    '@nuxtjs/sitemap',
     ['vue-scrollto/nuxt', {
         duration: 400,
         offset: -20,
         easing: [0.00, 0.0, 0.0, 1.0],
         onDone: () => {}
     }],
-    'nuxt-webfontloader'
   ],
   buildModules: [
     '@nuxtjs/tailwindcss'
@@ -59,9 +56,6 @@ module.exports = {
   tailwindcss: {
     configPath: '~/config/tailwind.config.js',
     cssPath: '~/assets/css/tailwind.scss'
-  },
-  googleAnalytics: {
-    id: 'UA-135103429-1'
   },
   mq: {
     defaultBreakpoint: 'sm',

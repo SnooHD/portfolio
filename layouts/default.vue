@@ -1,6 +1,26 @@
 <template>
-  <div class="overflow-hidden">
-    <nuxt />
+  <div class="
+    overflow-hidden
+    lg:px-14
+    md:px-12 
+    sm:px-10
+    xs:px-8
+    px-6
+    font-galano
+    text-gray-blue
+    mds_layout
+    bg-light
+  ">
+    <nuxt 
+      class="
+        py-4
+        sm:py-6
+        md:py-10
+        xl:max-w-1100
+        container
+        mx-auto
+      "
+    />
   </div>
 </template>
 

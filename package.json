@@ -21,6 +21,7 @@
     "nuxt": "^2.12.2",
     "nuxt-mq": "^2.0.1",
     "nuxt-webfontloader": "^1.1.0",
+    "tailwindcss-interaction-variants": "^4.0.0",
     "tailwindcss-transforms": "^2.2.0",
     "tailwindcss-transitions": "^2.2.0",
     "vue-scrollto": "^2.18.1",

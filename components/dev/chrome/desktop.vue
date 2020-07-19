@@ -1,8 +1,13 @@
 <template>
-<div>
-    <svg width="715" height="406" preserveAspectRatio="xMidYMid slice" viewBox="50 -10 722 510" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<div class="relative z-10">
+    <svg class="absolute z-0 top-0 left-0" width="100%" preserveAspectRatio="xMidYMid slice" viewBox="50 41 622 428" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <g filter="url(#chrome-filter0_ddd)">
-    <path fill-rule="evenodd" clip-rule="evenodd" d="M55 40C52.2386 40 50 42.2386 50 45V445C50 447.761 52.2386 450 55 450H667C669.761 450 672 447.761 672 445V45C672 42.2386 669.761 40 667 40H55Z" fill="white"/>
+        <path 
+            fill-rule="evenodd" 
+            clip-rule="evenodd" 
+            d="M55 40C52.2386 40 50 42.2386 50 45V465C50 467.761 52.2386 470 55 470H667C669.761 470 672 467.761 672 465V45C672 42.2386 669.761 40 667 40H55Z" 
+            fill="white"
+        />
     </g>
     <mask id="chrome-mask0" mask-type="alpha" maskUnits="userSpaceOnUse" x="50" y="40" width="622" height="410">
     <path fill-rule="evenodd" clip-rule="evenodd" d="M55 40C52.2386 40 50 42.2386 50 45V445C50 447.761 52.2386 450 55 450H667C669.761 450 672 447.761 672 445V45C672 42.2386 669.761 40 667 40H55Z" fill="white"/>
@@ -27,7 +32,7 @@
     <rect x="161" y="55" width="177" height="20" fill="url(#chrome-paint1_linear)"/>
     </mask>
     <g mask="url(#chrome-mask1)">
-        <text x="161" y="70" font-size="14" fill="#3D4043">{{item.name.length > 13 ? item.name.substr(0, 13) + '...' : item.name}}</text>
+        <text x="161" y="70" font-size="14" fill="#3D4043">{{item.name.length > 12 ? item.name.substr(0, 12) + '...' : item.name}}</text>
     </g>
     <path fill-rule="evenodd" clip-rule="evenodd" d="M269.207 67.8155C268.931 68.0916 268.931 68.5394 269.207 68.8155C269.483 69.0916 269.931 69.0916 270.207 68.8155L272.965 66.0577L275.723 68.8155C275.999 69.0916 276.447 69.0916 276.723 68.8155C276.999 68.5394 276.999 68.0916 276.723 67.8155L273.965 65.0577L276.723 62.2999C276.999 62.0237 276.999 61.576 276.723 61.2999C276.447 61.0237 275.999 61.0237 275.723 61.2999L272.965 64.0577L270.207 61.2999C269.931 61.0237 269.483 61.0237 269.207 61.2999C268.931 61.576 268.931 62.0237 269.207 62.2999L271.965 65.0577L269.207 67.8155Z" fill="#5E6063"/>
     <g transform="translate(137, 57) scale(.8)">
@@ -51,27 +56,8 @@
     <path d="M617 94.3L618.665 98.2078L622.897 98.5841L619.695 101.376L620.644 105.516L617 103.333L613.356 105.516L614.305 101.376L611.103 98.5841L615.335 98.2078L617 94.3Z" stroke="#606367" stroke-width="1.4"/>
     <path fill-rule="evenodd" clip-rule="evenodd" d="M651.5 95.1C651.5 95.9284 650.828 96.6 650 96.6C649.172 96.6 648.5 95.9284 648.5 95.1C648.5 94.2715 649.172 93.6 650 93.6C650.828 93.6 651.5 94.2715 651.5 95.1ZM651.5 100.1C651.5 100.928 650.828 101.6 650 101.6C649.172 101.6 648.5 100.928 648.5 100.1C648.5 99.2715 649.172 98.6 650 98.6C650.828 98.6 651.5 99.2715 651.5 100.1ZM650 106.6C650.828 106.6 651.5 105.928 651.5 105.1C651.5 104.272 650.828 103.6 650 103.6C649.172 103.6 648.5 104.272 648.5 105.1C648.5 105.928 649.172 106.6 650 106.6Z" fill="#606367"/>
     </g>
-    <g >
-    <a 
-        class="transition-1000 transition-transform"
-        :style="[{
-            transform:
-            $mq === 'desktop'
-            ? 'translate(490px, 475px)'
-            : item.name === 'Track & Trace' ? 'translate(125px, 460px)'
-            : item.name === 'HTR' ? 'translate(140px, 460px)' : 'translate(97px, 460px)'
-        }]"
-        :xlink:href="item.link || item.url" :href="item.link || item.url" target="_blank">
-        <path d="M11 16.6138C12.1 16.6138 13.1242 16.3104 14.0345 15.7035C14.9449 15.0966 15.6277 14.338 16.0828 13.3897L20.6346 5.5C21.5828 7.20689 22.0001 9.06551 22.0001 11C22.0001 13.769 21.0897 16.1586 19.3069 18.2069C17.5242 20.2552 15.2863 21.469 12.6311 21.8862L9.44483 16.3483C9.74831 16.4621 10.3173 16.6138 11 16.6138Z" fill="white"/>
-        <path d="M14.4517 6.44829C13.4276 5.65173 12.2896 5.31035 11 5.31035H1.55513C2.54135 3.64139 3.86892 2.42757 5.53791 1.47929C7.20687 0.49311 9.02758 0 11 0C12.7069 0 14.3379 0.379329 15.8172 1.1C17.2965 1.82068 18.7 2.88278 19.6862 4.24829L16.5 9.48279C16.1965 8.26896 15.4759 7.24485 14.4517 6.44829Z" fill="white"/>
-        <path d="M0.83455 6.8656H7.20696C6.10695 7.9656 5.34834 9.40699 5.34834 11.0001C5.34834 12.176 5.68973 13.238 6.33456 14.2242L10.8863 22.0001C7.88973 21.9622 5.3104 20.9001 3.18628 18.7381C1.06216 16.576 5.24521e-05 13.9967 5.24521e-05 11.0001C5.24521e-05 9.59666 0.227658 8.11733 0.83455 6.8656Z" fill="white"/>
-        <path d="M11 6.82764C8.72413 6.82764 6.82762 8.72419 6.82762 11C6.82762 13.2759 8.72413 15.1724 11 15.1724C13.2759 15.1724 15.1724 13.2759 15.1724 11C15.1724 8.72415 13.2759 6.82764 11 6.82764Z" fill="white"/>
-        <text x="30" y="17" fill="#FFF" class="font-montserrat font-semibold text-mid">View site</text>
-        <rect width="100" height="22" fill="#FFF" fill-opacity="0" />
-    </a>
-    </g>
     <defs>
-    <filter id="chrome-filter0_ddd" x="0" y="0" width="722" height="510" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+    <filter id="chrome-filter0_ddd" x="-100" y="-100" width="822" height="628" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
     <feFlood flood-opacity="0" result="BackgroundImageFix"/>
     <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"/>
     <feOffset dy="10"/>
@@ -131,12 +117,14 @@
     </defs>
     </svg>
 
-    <div class="rounded-b-sm overflow-hidden absolute top-0 left-0 translate-chrome-view">
-        <div class="overflow-auto h-327px w-616px">
-            <img v-if="item.name === 'Nativeway'" src="@/assets/images/dev/desktop/nativeway.png" />
-            <img v-if="item.name === 'Track & Trace'" src="@/assets/images/dev/desktop/track-and-trace.png" />
-            <img v-if="item.name === 'HTR'" src="@/assets/images/dev/desktop/htr.png" />
-            <img v-if="item.name === 'Quality Connection'" src="@/assets/images/dev/desktop/quality-connection.png" />
+    <div class="overflow-hidden w-full rounded-b relative z-10 mt-12.7%">
+        <div class="pb-56.3% w-full relative">
+            <div class="overflow-auto w-full h-full absolute left-0 top-0">
+                <img v-if="item.name === 'Nativeway'" src="/images/dev/desktop/nativeway.jpg" />
+                <img v-if="item.name === 'Custom Fotowand'" src="/images/dev/desktop/fotowand.jpg" />
+                <img v-if="item.name === 'Hendrikx-ITC'" src="/images/dev/desktop/hendrikx-itc.jpg" />
+                <img v-if="item.name === 'Quality Connection'" src="/images/dev/desktop/quality-connection.jpg" />
+            </div>
         </div>
     </div>
 </div>

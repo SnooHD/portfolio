@@ -10,7 +10,7 @@
             'group-hover:transform-balloon-active group-hover:opacity-100 group-hover:pointer-events-auto',
             'after:empty-content after:absolute after:bottom-0 after:left-50 after:transform-balloon-triangle after:w-0 after:h-0 after:border-triangle'
         ]">
-            <p class="text-tiny font-montserrat text-white">{{error.message}}</p>
+            <p class="text-tiny text-white">{{error.message}}</p>
         </div>
         <div :class="{shake: error.trigger}">
             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"

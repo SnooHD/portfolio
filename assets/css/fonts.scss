@@ -1,0 +1,49 @@
+@font-face {
+    font-family: 'GalanoGrotesque';
+    src: url('/fonts/GalanoGrotesque-Regular.woff2') format('woff2'),
+        url('/fonts/GalanoGrotesque-Regular.woff') format('woff'),
+        url('/fonts/GalanoGrotesque-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'GalanoGrotesque';
+    src: url('/fonts/GalanoGrotesque-Medium.woff2') format('woff2'),
+        url('/fonts/GalanoGrotesque-Medium.woff') format('woff'),
+        url('/fonts/GalanoGrotesque-Medium.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'GalanoGrotesque';
+    src: url('/fonts/GalanoGrotesque-SemiBold.woff2') format('woff2'),
+        url('/fonts/GalanoGrotesque-SemiBold.woff') format('woff'),
+        url('/fonts/GalanoGrotesque-SemiBold.ttf') format('truetype');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'GalanoGrotesque';
+    src: url('/fonts/GalanoGrotesque-Bold.woff2') format('woff2'),
+        url('/fonts/GalanoGrotesque-Bold.woff') format('woff'),
+        url('/fonts/GalanoGrotesque-Bold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'GalanoGrotesque';
+    src: url('/fonts/GalanoGrotesque-Black.woff2') format('woff2'),
+        url('/fonts/GalanoGrotesque-Black.woff') format('woff'),
+        url('/fonts/GalanoGrotesque-Black.ttf') format('truetype');
+    font-weight: 900;
+    font-style: normal;
+    font-display: swap;
+}

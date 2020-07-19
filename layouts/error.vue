@@ -1,16 +1,13 @@
 <template>
-  <div class="page-404">
-    <!-- <headerBlock :page="page"/>
-    <error404 />
-    <footerBlock /> -->
+  <div class="h-full min-h-screen w-full flex flex-col items-center justify-center space-y-4">
+    <h1 class="text-xl font-medium">
+        This page does not excist.
+    </h1>
+    <nuxt-link class="text-lg px-4 py-2 font-medium text-white rounded-full active:shadow shadow-md hover:yellow-mid-press bg-yellow-mid" to="/">Homepage</nuxt-link>
   </div>
 </template>
 
 <script>
-// import headerBlock from '~/components/header/header.vue';
-// import footerBlock from '~/components/footer/footer.vue';
-// import error404 from '~/components/404/404.vue';
-
 export default {
     data(){
         return {
@@ -22,9 +19,6 @@ export default {
     },
     props: ['error'],
     components: {
-        // headerBlock,
-        // footerBlock,
-        // error404
     }
 }
 </script>

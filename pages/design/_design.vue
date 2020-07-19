@@ -1,7 +1,7 @@
 <template>
 <div class="flex flex-col justify-center items-center" v-if="param">
     <div ref="text" class="h-64 flex flex-col justify-center fixed top-0 z-0">
-        <h1 class="font-bree-serif text-1xl md:text-4xl px-12 text-center text-blue-dark">Have a look at the design of {{param.substr(0, 1).toUpperCase() + param.substr(1, param.length - 1)}}:</h1>
+        <h1 class="text-1xl md:text-4xl px-12 text-center text-blue-dark">Have a look at the design of {{param.substr(0, 1).toUpperCase() + param.substr(1, param.length - 1)}}:</h1>
     </div>
     <div class="w-full mt-64 relative z-10" 
         :style="`
@@ -12,7 +12,7 @@
         <img class="w-full" v-if="param === 'logopicker'" src="/images/design/logopicker-full.jpg" />
         <img class="w-full" v-if="param === 'adoption'" src="/images/design/adoption-full.jpg" />
         <img class="w-full" v-if="param === 'influence'" src="/images/design/influence-full.jpg" />
-        <img class="w-full" v-if="param === 'appcino'" src="/images/design/appcino-full.jpg" />
+        <img class="w-full" v-if="param === 'pwrful'" src="/images/design/pwrful-full.jpg" />
     </div>
     <div class="fixed flex bottom-0 z-20 flex-row w-full content-between justify-between sm:px-12 sm:py-12 py-8 px-4">
         <div>
@@ -54,7 +54,7 @@ export default {
             designs: [
                 'logopicker',
                 'adoption',
-                'appcino',
+                'pwrful',
                 'influence'
             ],
             originalScale: .9,
@@ -62,7 +62,8 @@ export default {
             fullScale: 1,
             originalAlpha: 1,
             alpha: 1,
-            fullAlpha: 0
+            fullAlpha: 0,
+            animating: false
         }
     },
     methods: {
@@ -73,17 +74,23 @@ export default {
                 return;
             }
             
-            requestAnimationFrame(() => {
-                //scale
-                const scaleDifference = this.fullScale - this.originalScale;
-                const scaleStep = scaleDifference / this.textHeight;
-                this.scale = this.originalScale + scaleStep * scrollY;
+            if(!this.animating){
+                this.animating = true;
 
-                //shadow
-                const alphaDiff = this.fullAlpha - this.originalAlpha;
-                const alphaStep = alphaDiff / this.textHeight;
-                this.alpha = this.originalAlpha + alphaStep * scrollY;
-            });
+                requestAnimationFrame(() => {
+                    //scale
+                    const scaleDifference = this.fullScale - this.originalScale;
+                    const scaleStep = scaleDifference / this.textHeight;
+                    this.scale = this.originalScale + scaleStep * scrollY;
+
+                    //shadow
+                    const alphaDiff = this.fullAlpha - this.originalAlpha;
+                    const alphaStep = alphaDiff / this.textHeight;
+                    this.alpha = this.originalAlpha + alphaStep * scrollY;
+
+                    this.animating = false;
+                });
+            }
         }
     },
     computed:{

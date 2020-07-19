@@ -1,24 +1,26 @@
 <template>
 <header id="home">
-    <div class="flex flex-row justify-between">
-        <logo :mobileMenu="mobileMenu" />
+    <div class="flex flex-row justify-end">
+        <!-- <logo :mobileMenu="mobileMenu" /> -->
         <div>
+            <!-- <div v-if="$mq !== 'lg' && $mq !== 'xl'" class="fixed top-0 right-0 w-screen h-screen bg-blue-mid z-10"></div> -->
             <blob :class="[`
-                absolute top-0
+                absolute
+                top-0
                 xl:-right-11
-                lg:-right-15 lg:transform-none
+                lg:-right-14 lg:transform-none
                 md:-right-10 md:transform-header-blob md:transition-none md:will-change-none
                 transition-1000 transition-transform transition-ease will-change-transform
                 pointer-events-none
             `,
                 mobileMenu ? 'translate-sm-m-blob-active' : 'sm:translate-sm-m-blob translate-m-blob'
             ]"/>
-            <menu>
+            <nav>
                 <menu-block :class="[`
-                    text-white font-montserrat font-bold tracking-tight flex
-                    lg:text-lg lg:w-96
-                    md:text-base md:w-80 md:flex-row md:translate-none md:h-auto md:px-0 md:static md:mt-0 md:transition-none  md:will-change-none
-                    text-xl flex-col items-end absolute top-0 right-0 px-10 mt-8 items-center justify-between h-180px
+                    text-white font-bold tracking-wider flex
+                    lg:text-lg md:space-x-4 lg:space-x-6
+                    md:text-base md:flex-row md:translate-none md:h-auto md:px-0 md:static md:mt-0 md:transition-none  md:will-change-none
+                    text-xl flex-col items-end absolute top-0 right-0 lg:px-10 mt-8 items-center justify-between h-180px
                     transition-transform transition-ease will-change-transform
                 `,
                     mobileMenu ? 'translate-none transition-delay-250 transition-800' : 'translate-menu-active transition-delay-0 transition-750'
@@ -31,52 +33,57 @@
                     mobileMenu ? 'translate-x-120px transition-delay-250' : 'translate-none transition-delay-0'
                 ]">
                     <svg class="w-10 sm:w-12" height="45" viewBox="4 1 16 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <rect width="16" height="2" transform="matrix(-1 0 0 1 16 0)" fill="white"/>
-                        <rect width="12" height="2" transform="matrix(-1 0 0 1 16 4)" fill="white"/>
-                        <rect width="8" height="2" transform="matrix(-1 0 0 1 16 8)" fill="white"/>
+                        <rect width="16px" height="1.75" transform="matrix(-1 0 0 1 16 0)" fill="white"/>
+                        <rect width="12px" height="1.75" transform="matrix(-1 0 0 1 16 4.5)" fill="white"/>
+                        <!--
+                            :class="[
+                                'transition-all',
+                                mobileMenu ? 'w-16px' : 'w-8px'
+                            ]" 
+                        -->
+                        <rect 
+                            width="8px"
+                            height="1.75" transform="matrix(-1 0 0 1 16 9)" fill="white"/>
                     </svg>
                 </div>
-            </menu>
+            </nav>
         </div>
     </div>
     <div class="
-        xl:pl-12
-        lg:pl-4 lg:mt-40
-        md:mt-32
+        lg:mt-24
         mt-16
     ">
-        <p style="font-family: 'Black Han Sans', sans-serif;" class="flex flex-col leading-tight text-blue-dark">
+        <div class="flex flex-col leading-tight text-blue-dark">
+            <h1 class="
+                lg:text-7xl
+                md:text-5.5xl
+                text-5xl
+                font-black
+                leading-tighter
+            ">
+                Hello there,<br/> <span class="tracking-tight">I'm Mike:</span>
+            </h1>
             <span class="
-                xl:text-5xl
-                lg:text-4xl
-                md:text-3xl
+                mt-2
+                font-medium
+                lg:text-2.5xl
                 text-2xl
             ">
-                Hello there, I'm Snoo.
+                A professional clicker.
             </span>
-            <span class="
-                tracking-wider
-                xl:text-2xl
-                md:text-lg
-            ">
-                Your potential new designer / developer.
-            </span>
-        </p>
+        </div>
         <div class="
-            font-montserrat
-            xl:mt-12
-            lg:mt-10
-            sm:flex sm:flex-row
+            lg:mt-6
             flex flex-col-reverse mt-6 items-start
         ">
-            <button v-scroll-to="'#contact'" class="
-                rounded-full bg-blue-mid text-white font-semibold
-                sm:text-mid
-                text-xs px-4 py-2
+            <button v-scroll-to="'#dev'" class="
+                shadow-md active:shadow
+                hover:bg-blue-press transition-bg transition-400
+                rounded-full bg-blue-mid text-white font-bold
+                text-xl tracking-wider px-6 py-2 lg:px-10 lg:py-3
             ">
-                Contact now
+                How I click
             </button>
-            <span v-scroll-to="'#dev'" class="cursor-pointer text-blue-mid text-mid sm:pl-10 pl-1 sm:py-2 sm:pb-0 pb-4 font-bold">Show me what you got.</span>
         </div>
     </div>
 </header>

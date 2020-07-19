@@ -1,44 +1,70 @@
 <template>
-<section ref="section" id="design" class="lg:px-4 sm:mt-24 mt-32 flex flex-col justify-between relative">
-    <h1 class="font-bree-serif text-1xl md:text-4xl text-blue-dark">Design</h1>
+<section ref="section" id="design" 
+    class="
+        relative
+        z-0
+        lg:mt-40
+        md:mt-26
+        mt-32
+    "   
+>
+    <h2 class="
+        text-blue-dark
+        md:text-5.5xl
+        text-4xl
+        inline-block
+        font-black
+        relative
+        before:bg-yellow-light
+    ">
+        <span class="relative">Design</span>
+    </h2>
     <div
         @swipeLeft="setImage('next')"
         @swipeRight="setImage('previous')"
         @touchstart="startTouchWrapper"
-        class="flex lg:block flex-row w-320 lg:w-full sm:mt-16 mt-12 xl:px-8 transition-500 transition-transform"
+        class="relative z-10 flex lg:block flex-row w-320 lg:w-full mt-6 lg:mt-0 transition-400 transition-transform"
         :style="[wrapperOffset ? {transform: `translateX(${wrapperOffset})`} : null, {width: scrollWrapperWidth}, {transition: moving ? 'none' : null}]"
     >
-        <div v-for="(part, index) in splitImages()"
-            :key="`image-block-${index}`"
-            :class="[
-                'flex justify-between items-center lg:px-0',
-                index % 2 !== 0 ? 'flex-row-reverse lg:flex-row lg:mt-12' : 'flex-row'
-            ]"
+        <div
+            class="
+                flex
+                lg:grid lg:grid-cols-2 lg:grid-rows-2
+                lg:gap-8 xl:gap-0
+            "
         >
-            <div v-for="image in part"
+            <div v-for="(image, index) in images"
                 ref="images"
                 :key="image.src"
                 :class="[
-                    'lg:w-478px lg:h428px',
-                    image.size === 'small' ? 'flex flex-row justify-center sm:pl-12 lg:pl-0 pl-10' : null,
-                    index % 2 !== 0 ? image.size === 'big' ? 'pl-12 lg:pl-0' : null : null
+                    'flex items-center lg:ml-0',
+                    'before:empty-content before:pt-full before:inline-block',
+                    index === 0 ? 'ml-0' : 'ml-8 sm:ml-20 md:ml-24',
+                    index % 2 === 0 ? 
+                    'justify-start' :
+                    'justify-end'
                 ]"
             >
                 <div :class="[
-                        image.size === 'small' ? 'lg:px-12 xl:px-0' : 'lg:px-4 xl:px-0',
-                        $mq === 'desktop' ? 'hover:scale-grow scale-none transition-400 transition-transform' : null
+                        'inline-flex w-60vw md:w-478px justify-center px-0',
+                        image.size === 'small' ? 'lg:px-12 xl:px-8' : null,
+                        'lg:hover:scale-grow lg:scale-none lg:transition-400 lg:transition-transform'
                     ]"
-                    @click="toImage(image)"
                 >
-                    <nuxt-link v-if="$mq === 'desktop' || image.active" :to="`design/${image.design}`">
-                        <img :class="['cursor-pointer', image.design === 'logopicker' ? 'shadow-design-light' : 'shadow-design-dark']" :src="image.src" />
-                    </nuxt-link>
-                    <img v-else :class="['cursor-pointer', image.design === 'logopicker' ? 'shadow-design-light' : 'shadow-design-dark']" :src="image.src" />
+                    <a class="inline-block" @click="toImage($event, image)" :href="`design/${image.design}`">
+                        <img class="rounded-lg w-full" 
+                            :class="[
+                                'cursor-pointer transition-shadow transition-400',
+                                getShadows(image, index)
+                            ]" 
+                            :src="image.src"
+                        />
+                    </a>
                 </div>
             </div>
         </div>
     </div>
-    <blobs class="-z-1 absolute -left-4 top-10 sm:top-22" />
+    <blobs class="z-0 absolute top-30 hidden lg:block w-full h-full" />
 </section>
 </template>
 
@@ -57,7 +83,8 @@ export default {
                 active: true,
                 src: '/images/design/logopicker-thumb.jpg',
                 design: 'logopicker',
-                size: 'big'
+                size: 'big',
+                type: 'light'
             },{
                 active: false,
                 src: '/images/design/adoption-thumb.jpg',
@@ -70,8 +97,8 @@ export default {
                 size: 'small'
             },{
                 active: false,
-                src: '/images/design/appcino-thumb.jpg',
-                design: 'appcino',
+                src: '/images/design/pwrful-thumb.jpg',
+                design: 'pwrful',
                 size: 'big'
             }],
             activeIndex: 0
@@ -81,34 +108,43 @@ export default {
         blobs
     },
     methods: {
-        toImage(image){
-            console.log(image);
-            if(this.$mq === 'desktop'){
-                return;
+        getShadows(item, index){
+            let shadows = ['lg:shadow-lg'];
+
+            if(this.$mq !== 'xl'){
+                if(this.activeIndex === index){
+                    shadows.push('shadow-lg');
+                }else{
+                    shadows.push('shadow-md');
+                }
             }
 
-            if(image.active){
+            if(item.type === 'light'){
+                shadows = shadows.map(shadow => `${shadow}-light` );
+            }
+
+            return shadows.join(' ');
+        },
+        setShadow(){
+
+        },
+        toImage(e, image){
+            if(this.$mq === 'xl'){
                 return;
             }
 
             let index = this.images.indexOf(image);
-            console.log(this.activeIndex)
-            if(this.activeIndex === 3){
-                this.activeIndex = 2;
-                console.log(index);
-                if(index === 2){
-                    index = 3;
-                }
-            }else if(this.activeIndex === 2){
-                this.activeIndex = 3;
-                index = 2;
+            if(index !== this.activeIndex){
+                e.preventDefault();
+            }else{
+                return;
             }
+            
+
             let dir = 'next';
             if(index < this.activeIndex){
                 dir = 'previous';
             }
-
-            console.log(dir);
 
             this.setImage(dir);
         },
@@ -129,27 +165,12 @@ export default {
                 if(_image.active){
                     if(dir === 'previous'){
                         activeIndex = i - 1;
-                        if(i === 2){
-                            activeIndex = 3;
-                        }
-                        if(i === 3){
-                            activeIndex = 1;
-                        }
 
                         if(!this.images[activeIndex]){
                             activeIndex = this.images.length - 2;
                         }
                     }else{
                         activeIndex = i + 1;
-                        if(i === 1){
-                            activeIndex = 3;
-                        }
-                        if(i === 3){
-                            activeIndex = 2;
-                        }
-                        if(i === 2){
-                            activeIndex = 0;
-                        }
                         
                         if(!this.images[activeIndex]){
                             activeIndex = 0;
@@ -166,7 +187,7 @@ export default {
             this.setWrapperOffset();
         },
         startTouchWrapper(e){
-            if(this.$mq === 'desktop'){
+            if(this.$mq === 'xl'){
                 return;
             }
             
@@ -194,14 +215,19 @@ export default {
             this.scrollWrapperWidth = null;
 
             this.$nextTick(() => {
+
+                // const screensize = window.innerWidth;
+                // const containerWidth = this.$refs.section.parentElement.offsetWidth;
+                // const containerOffset = screensize - containerWidth;
+                // const imageWidth = (screensize - containerOffset) * .6;
+
                 const images = this.$refs.images;
                 let width = 0;
                 for(let i=0; i<images.length; i++){
-                    width += images[i].getBoundingClientRect().width;
-
-                    if(!this.images[i].offset){
-                        this.images[i].offset = images[i].getBoundingClientRect().left;
-                    }
+                    const image = images[i];
+                    const refStyle = window.getComputedStyle(image);
+                    const marginLeft = parseInt(refStyle.getPropertyValue('margin-left'));
+                    width += image.offsetWidth + marginLeft;
                 }
                 this.scrollWrapperWidth = `${width}px`;
 
@@ -216,30 +242,31 @@ export default {
             let activeIndex;
             for(let i=0; i<this.images.length; i++){
                 const _image = this.images[i];
+                const imageRef = this.$refs.images[i];
+                const refStyle = window.getComputedStyle(imageRef);
+                const marginLeft = parseInt(refStyle.getPropertyValue('margin-left'));
+
                 if(_image.active){
+                    offset -= marginLeft;
                     activeIndex = i;
                     break;
                 }
 
-                offset -= this.$refs.images[i].getBoundingClientRect().width;
+                offset -= imageRef.offsetWidth + marginLeft;
             }
 
             const screensize = window.innerWidth;
-            const leftOffset = offset + this.images[activeIndex].offset;
-            const center = (screensize - this.$refs.images[activeIndex].querySelector('img').getBoundingClientRect().width) / 2;
+            const center = (screensize - this.$refs.images[activeIndex].offsetWidth) / 2;
 
-            const paddingLeft =  parseInt(getComputedStyle(this.$refs.images[activeIndex]).getPropertyValue('padding-left'));
-
-            const containerWidth = this.$refs.section.parentElement.getBoundingClientRect().width;
+            const containerWidth = this.$refs.section.parentElement.offsetWidth;
             const containerOffset = (screensize - containerWidth) / 2;
-
-            const correction = ((center - leftOffset) - paddingLeft) - containerOffset;
+            
+            let correction = center - containerOffset;
 
             this.wrapperOffset = `${offset + correction}px`;
         },
         resizeWrapper(){
-            console.log(this.$mq)
-            if(this.$mq === 'desktop'){
+            if(this.$mq === 'xl'){
                 this.moving = false;
                 this.swiped = false;
                 this.touchStart = '0px';

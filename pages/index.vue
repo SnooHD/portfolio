@@ -1,17 +1,12 @@
 <template>
   <div class="
-    container mx-auto relative
-    lg:px-14
-    md:px-12 md:py-10
-    sm:px-8 sm:py-6
-    px-6 py-4
+    relative
   ">
     <header-block />
     <intro />
     <dev />
     <design />
     <contact />
-    <footer-block />
   </div>
 </template>
 

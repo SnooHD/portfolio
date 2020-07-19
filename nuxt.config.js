@@ -74,7 +74,6 @@ module.exports = {
   },
   generate: {
     routes: [
-      '404',
       '/design/logopicker',
       '/design/pwrful',
       '/design/influence',
@@ -147,7 +146,16 @@ module.exports = {
       'overflow-y-hidden',
       'border-light-gray',
       'lg:border-b',
-      'border-none'
+      'border-none',
+      'mt-12.7%',
+      'pb-56.3%',
+      'overflow-auto',
+      'pb-177.7%',
+      'pt-17%',
+      'pb-21%',
+      'rounded-b-sm',
+      'bg-white',
+      'origin-top'
     ]
   },
   build: {

@@ -17,6 +17,7 @@ module.exports = {
       'none': 'none',
       'all': 'all',
       'color': 'color',
+      'width': 'width',
       'bg': 'background-color',
       'border': 'border-color',
       'colors': ['color', 'background-color', 'border-color'],
@@ -43,6 +44,8 @@ module.exports = {
       'ease-in': 'ease-in',
       'ease-out': 'ease-out',
       'ease-in-out': 'ease-in-out',
+      'easeOutSine': 'cubic-bezier(0.61, 1, 0.88, 1)',
+      'easeOutQuint': 'cubic-bezier(0.22, 1, 0.36, 1)'
     },
     transitionDelay: { // defaults to these values
       'default': '0ms',
@@ -76,6 +79,8 @@ module.exports = {
       'translate-z-0': 'translateZ(0)'
     },
     translate: {
+      'intro-blob': ['1%', '3%'],
+      'x-12': ['12px', '0'],
       'fix-text': ['0', '2px'],
       'center-right': ['50%', '0'],
       'link-center': ['50%', '20px'],
@@ -148,6 +153,7 @@ module.exports = {
         '99': '99'
       },
       width: {
+        '18': '3.5rem',
         '96': '24rem',
         '84': '21rem',
         '80': '20rem',
@@ -286,21 +292,21 @@ module.exports = {
     backfaceVisibility: ['responsive'],
     boxShadow: ['responsive', 'before', 'after', 'hover', 'active', 'group-active'],
     transformBox: ['responsive'],
-    transitionProperty: ['responsive', 'before', 'after'],
+    transitionProperty: ['responsive', 'before', 'after', 'hover'],
     transitionDuration: ['responsive', 'before', 'after'],
-    transitionTimingFunction: ['responsive', 'before', 'after'],
+    transitionTimingFunction: ['responsive', 'before', 'after', 'group-hover'],
     transitionDelay: ['responsive', 'before', 'after'],
     willChange: ['responsive', 'before', 'after'],
     opacity: ['responsive', 'group-hover', 'hover'],
     pointerEvents: ['responsive', 'group-hover'],
     position: ['responsive', 'before', 'after'],
     inset: ['responsive', 'before', 'after'],
-    width: ['responsive', 'before', 'after'],
+    width: ['responsive', 'before', 'after', 'group-hover'],
     height: ['responsive', 'before', 'after'],
     padding: ['responsive', 'before', 'after'],
     margin: ['responsive', 'before', 'after'],
     display: ['responsive', 'before', 'after'],
-    backgroundColor: ['responsive', 'hover', 'before', 'after'],
+    backgroundColor: ['responsive', 'hover', 'before', 'after', 'group-hover'],
     color: ['responsive', 'hover', 'before', 'after']
   },
   plugins: [

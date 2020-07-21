@@ -45,7 +45,7 @@ module.exports = {
     'nuxt-mq',
     ['vue-scrollto/nuxt', {
         duration: 400,
-        offset: -20,
+        offset: -40,
         easing: [0.00, 0.0, 0.0, 1.0],
         onDone: () => {}
     }],
@@ -155,7 +155,11 @@ module.exports = {
       'pb-21%',
       'rounded-b-sm',
       'bg-white',
-      'origin-top'
+      'origin-top',
+      'transition-easeOutSine',
+      'transition-easeOutQuint',
+      'lg:translate-intro-blob',
+      'w-120%'
     ]
   },
   build: {

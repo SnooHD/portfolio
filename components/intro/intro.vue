@@ -11,7 +11,7 @@
         lg:justify-between
         lg:flex-row
     ">
-        <div class="flex flex-row justify-center sm:block lg:-translate-8">
+        <div class="flex flex-row justify-center block lg:translate-intro-blob">
             <blob/>
         </div>
         <div>

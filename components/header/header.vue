@@ -68,14 +68,48 @@
             lg:mt-6
             flex flex-col-reverse mt-6 items-start
         ">
-            <button v-scroll-to="'#dev'" class="
-                shadow-md active:shadow
-                hover:bg-blue-press transition-bg transition-400
-                rounded-full bg-blue-mid text-white font-bold
-                text-xl tracking-wider px-6 py-2 lg:px-10 lg:py-3
-            ">
-                How I click
-            </button>
+            <div @mousemove="$mq === 'xl' ? inspectCursor($event) : null" @mouseleave="$mq === 'xl' ? ignoreCursor($event) : null"
+                class="
+                    button-wrapper p-4 -ml-4 -mt-4 group
+                "
+            >
+                <button v-scroll-to="'#dev'" class="
+                    group relative z-0
+                    transition-bg transition-400
+                    text-white font-bold
+                    text-xl tracking-wider px-6 py-2 lg:px-10 lg:py-3
+                ">
+                    <div 
+                        ref="background"
+                        :style="`transform: translate3d(${backgroundX}px, ${backgroundY}px, 0px) scale(${backgroundX ? '1.05' : '1'})`"
+                        class="
+                            will-change-transform
+                            absolute left-0 top-0 w-full h-full z-0
+                            transition-400 transition-transform
+                            shadow-md group-active:shadow
+                            group-hover:bg-blue-press
+                            rounded-full bg-blue-mid
+                        "
+                        :class="[
+                            isInspecting ? 'transition-easeOutQuint' : 'transition-easeOutSine'
+                        ]"
+                    />
+                    <span
+                        :style="`transform: translate3d(${textX}px, ${textY}px, 0px) scale(${textX ? '1.05' : '1'})`"
+                        class="
+                            will-change-transform
+                            relative z-10 inline-block
+                            transition-400 transition-transform
+                        "
+                        :class="[
+                            isInspecting ? 'transition-easeOutQuint' : 'transition-easeOutSine'
+                        ]"
+                        ref="text"
+                    >
+                        How I click
+                    </span>
+                </button>
+            </div>
         </div>
     </div>
 </header>
@@ -88,12 +122,75 @@ import blob from './blob/blob.vue';
 export default {
     data(){
         return {
-            mobileMenu: false
+            moveButton: .2,
+            mobileMenu: false,
+            inspecting: false,
+            inspectTimeout: null,
+            isInspecting: false,
+            inspectButton: null,
+            backgroundX: 0,
+            backgroundY: 0,
+            textX: 0,
+            textY: 0
         }
     },
     components: {
         menuBlock,
         blob
+    },
+    async mounted(){
+        await this.$nextTick();
+        
+        const background = this.$refs.background;
+        const width = background.offsetWidth;
+        const height = background.offsetHeight;
+        this.inspectButton = {width, height}
+    },
+    methods: {
+        inspectCursor(e){
+            if(this.isInspecting === false){
+                this.isInspecting = null;
+                clearTimeout(this.inspectTimeout);
+                this.inspectTimeout = setTimeout(() => {
+                    this.isInspecting = true;
+                }, 400);
+            }
+            
+            if(!this.inspecting){
+                this.inspecting = true;
+                requestAnimationFrame(() => {
+                    const background = this.$refs.background;
+                    const x = background.getBoundingClientRect().left;
+                    const y = background.getBoundingClientRect().top;
+                    
+                    const offsetX = e.clientX - x;
+                    const offsetY = e.clientY - y;
+
+                    const {width, height} = this.inspectButton;
+                    
+                    const moveBackground = this.moveButton * 100;
+                    this.backgroundX = (offsetX - width / 2) / width * moveBackground;
+                    this.backgroundY = (offsetY - height / 2) / height * moveBackground;
+                    
+                    const moveText = (this.moveButton * 1.4) * 100;
+                    this.textX = (offsetX - width / 2) / width * (moveText * 1.2);
+                    this.textY = (offsetY - height / 2) / height * moveText;
+                    
+                    this.inspecting = false;
+                })
+            }
+        },
+        ignoreCursor(e){
+            requestAnimationFrame(() => {
+                this.backgroundX = 0;
+                this.backgroundY = 0;
+
+                this.textX = 0;
+                this.textY = 0;
+
+                this.isInspecting = false;
+            });
+        }
     }
 }
 </script>

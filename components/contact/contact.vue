@@ -13,7 +13,7 @@
         <span class="relative">Contact</span>
     </h2>
     <div class="flex flex-col lg:flex-row mt-8 justify-between relative z-10">
-        <div class="flex flex-grow flex-col rounded-lg overflow-hidden lg:max-w-640px -ml-2 sm:-ml-4 w-contact-mobile sm:w-contact lg:w-3/5 bg-white shadow-xl pb-6">
+        <div class="flex flex-grow flex-col rounded-lg overflow-hidden lg:max-w-640px -ml-2 sm:-ml-4 lg:ml-0 w-contact-mobile sm:w-contact lg:w-3/5 bg-white shadow-xl pb-6">
             <div class="bg-blue-dark w-full flex">
                 <span class="px-6 py-3 font-semibold text-white text-xl">{{ $mq === 'mobile' ? 'Contact' : 'New message' }}</span>
             </div>
@@ -82,31 +82,38 @@
                     :key="`contact_info_${info.icon}`"
                 >
                     <a :href="info.link" target="_blank" 
-                        class="group flex space-x-4 items-center"
+                        class="group flex items-center h-10 lg:h-12 pl-10 lg:pl-12 relative z-0"
                     >
-                        <icons 
+                        <div
                             class="
-                                rounded-full
-                                bg-white
-                                py-3
-                                lg:p-3.5
-                                shadow-md
-                                flex
-                                items-center
-                                justify-center
-                                w-10
-                                h-10
-                                lg:w-12
-                                lg:h-12
-                                color-blue-mid
-                                group-active:shadow
+                                absolute left-0 top-0 z-0
+                                rounded-full bg-white
+                                shadow-md group-active:shadow h-full
+                                w-10 lg:w-12
+                                lg:transition-width lg:transition-400 lg:group-hover:w-full
+                                flex items-center justify-start
                             "
-                            :size="info.size || '100%'"
-                            :icon="info.icon"
-                            :color="$mq === 'xl' ? info.color : '#296AA5'"
-                        />
+                        >
+                            <icons 
+                                class="
+                                    py-3 lg:p-3.5
+                                    flex
+                                    items-center
+                                    justify-center
+                                    h-full
+                                    w-10
+                                    lg:w-12
+                                    color-blue-mid
+                                    lg:transition-transform lg:transition-400 
+                                    lg:group-hover:translate-x-12
+                                "
+                                :size="info.size || '100%'"
+                                :icon="info.icon"
+                                :color="$mq === 'xl' ? info.color : '#296AA5'"
+                            />
+                        </div>
                     
-                        <span>{{ info.content  }}</span>
+                        <span class="relative z-10 px-4 pr-6">{{ info.content  }}</span>
                     </a>
                 </li>
             </ul>
@@ -155,7 +162,7 @@ export default {
                 color: '#0077B5'
             },{
                 content: 'Codesandbox',
-                link: 'https://codesandbox.com/u/snoohd',
+                link: 'https://codesandbox.io/u/snoohd',
                 icon: 'codesandbox',
                 size: '120%',
                 color: '#67b3dc'

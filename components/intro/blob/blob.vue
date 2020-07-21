@@ -1,6 +1,6 @@
 <template>
 <div>
-<svg class="w-120% lg:w-400px relative -left-8" viewBox="0 0 394 414" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg class="w-120% lg:w-400px top-2 relative -left-8" viewBox="0 0 394 414" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 <path opacity="0.22" d="M328.806 173.624C253.568 131.527 266.422 17.2648 163.852 27.9117C20.6217 42.7792 19.1278 298.954 114.965 369.34C247.824 466.915 472.102 253.801 328.806 173.624Z" fill="url(#about_paint0_linear)"/>
 <path d="M307.806 172.623C232.568 130.526 245.422 16.2638 142.852 26.9107C-0.378347 41.7782 -1.87216 297.953 93.965 368.339C226.824 465.914 451.102 252.8 307.806 172.623Z" fill="url(#about_paint1_radial)"/>
 <mask id="about_mask0" mask-type="alpha" maskUnits="userSpaceOnUse" x="0" y="-1" width="373" height="414">

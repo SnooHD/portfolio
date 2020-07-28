@@ -15,18 +15,8 @@
             <blob/>
         </div>
         <div>
-            <h2 class="
-                text-blue-dark
-                md:text-5.5xl
-                text-4xl
-                inline-block
-                font-black
-                relative
-                before:bg-yellow-light
-            ">
-                <span class="relative">About me</span>
-            </h2>
-            <p class="mt-8 font-normal text-lg leading-wider ">
+            <section-title title="About me" />
+            <p class="mt-8 font-normal text-lg leading-wider">
                 I am a <b class="font-semibold">front-end developer</b> from Holland, the land of tulips, windmills and<br class="hidden xl:block"/>
                 wooden shoes. I'm unapologetically a web generalist, but I particularly love <br class="hidden xl:block"/>
                 diving deep into front-end development and UX design.<br/><br />
@@ -45,9 +35,11 @@
 
 <script>
 import blob from './blob/blob.vue';
+import sectionTitle from '~/components/ui/sectionTitle';
 export default {
     components: {
-        blob
+        blob,
+        sectionTitle
     }
 }
 </script>

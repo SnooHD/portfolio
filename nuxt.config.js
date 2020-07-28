@@ -33,7 +33,9 @@ module.exports = {
   ** Plugins to load before mounting the App
   */
   plugins: [
-    {src: '~plugins/touch', ssr: false},
+    { src: '~/plugins/anime.js', ssr: false },
+    { src: '~/plugins/preload', ssr: false },
+    { src: '~/plugins/touch', ssr: false },
   ],
 
   /*
@@ -44,10 +46,9 @@ module.exports = {
     '@nuxtjs/axios',
     'nuxt-mq',
     ['vue-scrollto/nuxt', {
-        duration: 400,
+        duration: 600,
         offset: -40,
-        easing: [0.00, 0.0, 0.0, 1.0],
-        onDone: () => {}
+        easing: [0.34, 1.26, 0.64, 1]
     }],
   ],
   buildModules: [
@@ -58,7 +59,7 @@ module.exports = {
     cssPath: '~/assets/css/tailwind.scss'
   },
   mq: {
-    defaultBreakpoint: 'sm',
+    defaultBreakpoint: false,
     breakpoints: {
       sm: 640,
       md: 768,
@@ -75,100 +76,18 @@ module.exports = {
   generate: {
     routes: [
       '/design/logopicker',
-      '/design/pwrful',
+      '/design/powrful',
       '/design/influence',
-      '/design/adoption'
+      '/design/adoption-support-alliance'
     ]
   },
   /*
   ** Build configuration
   */
-  purgeCSS: {
-    whitelist: [
-      'text-yellow-press',
-      'bg-red',
-      'bg-orange',
-      'bg-green',
-      'text-yellow-mid',
-      'text-blue-mid',
-      'text-blue-press',
-      'shadow-lg-light',
-      'shadow-md-light',
-      'translate-contact-stage',
-      'transition-opacity-transform',
-      'translate-contact-send',
-      'pb-dev-item-active',
-      'h-177px',
-      'lg:h-150px',
-      'pb-dev-item',
-      'h-75px',
-      'opacity-60',
-      'pr-4',
-      'pr-12',
-      'w-48',
-      'w-40',
-      'opacity-100',
-      'opacity-60',
-      'opacity-0',
-      'xs:pl-4',
-      'xs:pt-10',
-      'lg:flex',
-      'ml-8',
-      'sm:ml-20',
-      'md:ml-24',
-      'justify-start',
-      'lg:px-12',
-      'xl:px-8',
-      'border-none',
-      'lg:border-b',
-      'pointer-events-auto',
-      'pointer-events-none',
-      'top-11',
-      'top-50',
-      'transform-balloon-active',
-      'transform-balloon-closed',
-      'translate-sm-m-blob-active',
-      'sm:translate-sm-m-blob',
-      'translate-m-blob',
-      'transition-delay-250',
-      'transition-800',
-      'translate-menu-active',
-      'transition-delay-0',
-      'transition-750',
-      'translate-none',
-      'translate-x-120px',
-      'shake',
-      'text-base',
-      'top-6',
-      'border-14',
-      'triangle',
-      'left-100',
-      'overflow-y-hidden',
-      'border-light-gray',
-      'lg:border-b',
-      'border-none',
-      'mt-12.7%',
-      'pb-56.3%',
-      'overflow-auto',
-      'pb-177.7%',
-      'pt-17%',
-      'pb-21%',
-      'rounded-b-sm',
-      'bg-white',
-      'origin-top',
-      'transition-easeOutSine',
-      'transition-easeOutQuint',
-      'lg:translate-intro-blob',
-      'w-120%'
-    ]
-  },
   build: {
     /*
     ** You can extend webpack config here
     */
-    postcss: {
-        purgecss: false,
-    },
     extend(config, ctx) {
       // Run ESLint on save
       if (ctx.isDev && ctx.isClient) {

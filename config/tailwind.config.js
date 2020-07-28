@@ -5,6 +5,13 @@
 ** Default: https://github.com/tailwindcss/tailwindcss/blob/master/stubs/defaultConfig.stub.js
 */
 module.exports = {
+  purge: {
+    content: [
+      "./pages/**/*.vue", 
+      "./components/**/*.vue", 
+      "./layouts/**/*.vue"
+    ],
+  },
   theme: {
     screens: {
       'xs': '460px',
@@ -18,12 +25,13 @@ module.exports = {
       'all': 'all',
       'color': 'color',
       'width': 'width',
-      'bg': 'background-color',
+      'bg': ['background', 'background-color'],
       'border': 'border-color',
       'colors': ['color', 'background-color', 'border-color'],
       'opacity': 'opacity',
       'transform': 'transform',
       'fill': 'fill',
+      'text-shadow': 'text-shadow',
       'opacity-transform': ['opacity', 'transform']
     },
     transitionDuration: { // defaults to these values
@@ -44,6 +52,7 @@ module.exports = {
       'ease-in': 'ease-in',
       'ease-out': 'ease-out',
       'ease-in-out': 'ease-in-out',
+      'easeOutBack': 'cubic-bezier(0.34, 1.56, 0.64, 1)',
       'easeOutSine': 'cubic-bezier(0.61, 1, 0.88, 1)',
       'easeOutQuint': 'cubic-bezier(0.22, 1, 0.36, 1)'
     },
@@ -64,6 +73,12 @@ module.exports = {
       'transform': 'transform',
       'fill': 'fill'
     },
+    textShadow: {
+      default: '0 1px 0 rgba(0, 0, 0, .25)',
+      md: '0 1px 3px rgba(0, 0, 0, .25)',
+      lg: '0 1px 3px rgba(0, 0, 0, .5)',
+      none: 'none',
+    },
     transform: {
       'dev-mobile-blob': 'translateY(-45%) scale(1.5)',
       'dev-blob': 'scale(1.2)',
@@ -79,55 +94,41 @@ module.exports = {
       'translate-z-0': 'translateZ(0)'
     },
     translate: {
+      'none': ['0', '0'],
+      '-y-.8': ['0', '-8%'],
       'intro-blob': ['1%', '3%'],
-      'x-12': ['12px', '0'],
-      'fix-text': ['0', '2px'],
-      'center-right': ['50%', '0'],
       'link-center': ['50%', '20px'],
-      'footer-blob': ['10%', '0'],
       'footer-bear': ['50%', '-50%'],
+      'menu-active': ['300px', '150px'],
+      'm-blob': ['-14%', '-2%'],
       'sm-m-blob': ['-17%', '-2%'],
       'sm-m-blob-active': ['-56%', '-34%'],
-      'm-blob': ['-14%', '-2%'],
-      'menu-active': ['300px', '150px'],
+      'x-12': ['12px', '0'],
       'x-120px': ['-120px', '0'],
-      'none': ['0', '0'],
-      '-8': ['-8%', '0'],
-      '-1rem': ['-1rem', '0'],
-      'chrome-view': ['0', '79px'],
       '-y10': ['0', '-10%'],
-      'x1': ['1px', '0'],
-      '-x1': ['-1px', '0'],
+      '-x-2px': ['-2px', '0'],
       'contact-send': ['200%', '-150%'],
       'contact-stage': ['-200%', '150%']
     },
-    scale: {
-      'none': '1',
-      'grow': '1.05'
-    },
     colors: {
-      'transparent': 'transparent',
+      'none': 'transparent',
       'white': '#FFFFFF',
+      'darker': '#2A2A2A',
+      'dark': '#34434F',
+      'dark-light': '#586C77',
+      'light': '#F1F4F7',
+      'gray': '#69787F',
+      'gray-border': '#D8D8D8',
+      'gray-blue': '#3C5768',
+      'gray-light': '#D5DAEB',
       'blue-dark': '#2B3F7E',
       'blue-mid': '#2877B2',
-      'blue-press': '#23669a',
       'yellow-mid': '#F3B202',
-      'yellow-press': '#d49c02',
+      'yellow-dark': '#d49c02',
       'yellow-light': '#FFC975',
-      'green': '#41B883',
-      'blue-light': '#5EC6F2',
-      'blue-md-dark': '#2d6a82',
-      'gray-blue': '#3C5768',
-      'purple': '#515884',
-      'dark': '#414141',
-      'light': '#F1F4F7',
-      'gray-border': '#D8D8D8',
-      'orange': '#ff9337',
-      'gray': '#69787F',
-      'light-gray': '#D5DAEB',
       'red': '#F25E5E',
-      'none': 'transparent',
-      'mid-gray': '#ececec'
+      'green': '#41B883',
+      'orange': '#ff9337',
     },
     fontFamily: {
       'galano': ['GalanoGrotesque', 'sans-serif']
@@ -135,7 +136,6 @@ module.exports = {
     extend: {
       fontSize: {
         'tiny': '0.75rem',
-        'mid': '0.9375rem',
         '1xl': '1.3rem',
         '2.5xl': '1.65rem',
         '5.5xl': '3.25rem',
@@ -149,121 +149,84 @@ module.exports = {
         '60': '.6'
       },
       zIndex: {
-        '-1': '-1',
-        '99': '99'
+        '-1': '-1'
       },
       width: {
-        '18': '3.5rem',
-        '96': '24rem',
-        '84': '21rem',
-        '80': '20rem',
+        '2.5': '0.625rem',
         '280px': '280px',
-        '777px': '777px',
         '363px': '363px',
         '400px': '400px',
         '478px': '478px',
-        '276px': '276px',
-        '405px': '405px',
         '640px': '640px',
-        '25px': '25px',
-        '120%': '120%',
-        '320': '320%',
-        '16px': '16px',
-        '8px': '8px',
+        '1.2': '120%',
+        '3.2': '320%',
         '60vw': '60vw',
         'contact': 'calc(100% + 2rem)',
         'contact-mobile': 'calc(100% + 1rem)'
       },
       height: {
-        '1px': '1px',
-        '8px': '8px',
-        '1/2': '50%',
+        '2.5': '0.625rem',
+        '.5': '50%',
         '75px': '75px',
         '150px': '150px',
         '177px': '177px',
-        '364px': '364px',
-        '428px': '428px',
-        '500px': '500px',
-        '347px': '347px',
-        '445px': '445px',
         '240px': '240px',
-        '180px': '180px',
-        '25px': '25px'
+        '180px': '180px'
       },
-      maxHeight: {
-        '74px': '74px',
-        'auto': 'auto'
-      },
-      inset: {
-        '-4': '-4%',
-        '-5': '-5%',
-        '-6': '-6%',
-        '-7': '-7%',
-        '-8': '-8%',
-        '-10': '-10%',
-        '-11': '-11%',
-        '-12': '-12%',
-        '-14': '-14%',
-        '-20': '-20%',
-        '-25': '-25%',
-        '-30': '-30%',
-        '-40': '-40%',
-        '15': '15%',
-        '-2px': '-2px',
-        '-8px': '-8px',
-        '-1px': '-1px',
-        '-15px': '-15px',
-        '68px': '68px',
-        '62px': '62px',
+      inset: {        
         '25px': '25px',
-        '14px': '14px',
-        '9': '9%',
-        '10': '10%',
-        '11': '11%',
-        '30': '30%',
-        '50': '50%',
-        '60': '60%',
-        '75': '75%',
-        '100': '100%',
-        '22': '22%',
-        '2': '2%',
-        '4': '4%',
-        '5': '5%',
-        '6': '6%',
-        '-40px': '-40px',
-        '8px': '8px',
+
+        '-.06': '-.06%',
+        '-.8': '-8%',
+        '-.1': '-10%',
+        '-.11': '-11%',
+        '-.12': '-12%',
+        '-.14': '-14%',
+        '-.2': '-20%',
+        '-.25': '-25%',
+        '-.3': '-30%',
+        
+        '.09': '9%',
+        '.1': '10%',
+        '.11': '11%',
+        '.15': '15%',
+        '.3': '30%',
+        '.5': '50%',
+        '.75': '75%',
+        'full': '100%',
+        '.02': '2%',
+        '.06': '6%',
         '11px': '11px',
         '20px': '20px'
       },
       padding: {
+        '2.5': '0.625rem',
         'dev-item': 'calc(1rem + 1px)',
         'dev-item-active': 'calc(1rem + 8px)',
         'full': '100%',
         '52px': '52px',
         '77px': '77px',
         '59px': '59px',
-        '21%': '21%',
-        '17%': '17%',
+        '.21': '21%',
+        '.17': '17%',
         '3.5': '.9rem',
-        '177.7%': '177.7%',
-        '56.3%': '56.3%'
+        '7': '1.8rem',
+        '1.777': '177.7%',
+        '.63': '63%'
       },
       margin: {
         '44': '11rem',
         '-15px': '-15px',
         '1px': '1px',
         '8px': '8px',
-        '12.7%': '12.7%',
+        '.03': '3%',
         '15': '3.75rem',
       },
       spacing: {
         '14': '3.25rem'
       },
       boxShadow: {
-        'lg-light': '0 10px 15px -3px rgba(0, 0, 0, 0.04), 0 4px 6px -2px rgba(0, 0, 0, 0.02)',
-        'md-light': '0 4px 6px -1px rgba(0, 0, 0, 0.04), 0 2px 4px -1px rgba(0, 0, 0, 0.025)',
-        'top': '0px -1px 10px 0px rgba(0, 0, 0, 0.2)',
-        'window': '0px 10px 50px rgba(0, 0, 0, 0.02), 0px 15px 30px rgba(0, 0, 0, 0.07), 0px 0px 1px rgba(0, 0, 0, 0.3)'
+        'window': '0px 10px 50px rgba(0, 0, 0, 0.1), 0px 20px 30px rgba(0, 0, 0, 0.2), 0px 0px 1px rgba(0, 0, 0, 0.5)'
       },
       borderRadius: {
         'mid': '0.3125rem'
@@ -280,18 +243,19 @@ module.exports = {
     }
   },
   variants: { // all the following default to ['responsive']
-    transform: ['responsive', 'hover', 'group-hover', 'before', 'after'],
+    transform: ['responsive', 'hover', 'in-view', 'group-hover', 'before', 'after'],
     transformOrigin: ['responsive'],
-    translate: ['responsive', 'hover', 'group-hover'],
-    scale: ['responsive', 'hover'],
+    translate: ['responsive', 'hover', 'group-hover', 'in-view', 'group-in-view'],
+    scale: ['responsive', 'hover', 'in-view', 'after', 'before', 'hover:before', 'in-view:before'],
     rotate: ['responsive'],
     skew: ['responsive'],
     perspective: ['responsive'],
     perspectiveOrigin: ['responsive'],
     transformStyle: ['responsive'],
     backfaceVisibility: ['responsive'],
-    boxShadow: ['responsive', 'before', 'after', 'hover', 'active', 'group-active'],
+    boxShadow: ['responsive', 'before', 'after', 'hover', 'active', 'group-active', 'in-view'],
     transformBox: ['responsive'],
+    textShadow: ['responsive', 'hover'],
     transitionProperty: ['responsive', 'before', 'after', 'hover'],
     transitionDuration: ['responsive', 'before', 'after'],
     transitionTimingFunction: ['responsive', 'before', 'after', 'group-hover'],
@@ -324,8 +288,37 @@ module.exports = {
         })
       })
     },
+    function({ addVariant, e }) {
+      addVariant('hover:before', ({ modifySelectors, separator }) => {
+        modifySelectors(({ className }) => {
+          return `.${e(`hover${separator}before${separator}${className}`)}:hover::before`
+        })
+      })
+    },
+    function({ addVariant, e }) {
+      addVariant('in-view', ({ modifySelectors, separator }) => {
+        modifySelectors(({ className }) => {
+          return `.s_in-view.${e(`in-view${separator}${className}`)}`
+        })
+      })
+    },
+    function({ addVariant, e }) {
+      addVariant('group-in-view', ({ modifySelectors, separator }) => {
+        modifySelectors(({ className }) => {
+          return `.s_in-view .${e(`group-in-view${separator}${className}`)}`
+        })
+      })
+    },
+    function({ addVariant, e }) {
+      addVariant('in-view:before', ({ modifySelectors, separator }) => {
+        modifySelectors(({ className }) => {
+          return `.s_in-view.${e(`in-view${separator}before${separator}${className}`)}:before`
+        })
+      })
+    },
     require('tailwindcss-interaction-variants'),
     require('tailwindcss-transforms')(),
-    require('tailwindcss-transitions')()
+    require('tailwindcss-transitions')(),
+    require('tailwindcss-textShadow')
   ]
 }

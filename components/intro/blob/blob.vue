@@ -1,6 +1,7 @@
 <template>
 <div>
-<svg class="w-120% lg:w-400px top-2 relative -left-8" viewBox="0 0 394 414" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+
+<svg class="w-1.2 lg:w-400px top-.02 relative -left-.8" viewBox="0 0 394 414" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 <path opacity="0.22" d="M328.806 173.624C253.568 131.527 266.422 17.2648 163.852 27.9117C20.6217 42.7792 19.1278 298.954 114.965 369.34C247.824 466.915 472.102 253.801 328.806 173.624Z" fill="url(#about_paint0_linear)"/>
 <path d="M307.806 172.623C232.568 130.526 245.422 16.2638 142.852 26.9107C-0.378347 41.7782 -1.87216 297.953 93.965 368.339C226.824 465.914 451.102 252.8 307.806 172.623Z" fill="url(#about_paint1_radial)"/>
 <mask id="about_mask0" mask-type="alpha" maskUnits="userSpaceOnUse" x="0" y="-1" width="373" height="414">
@@ -14,10 +15,10 @@
 </g>
 <defs>
 <pattern id="about_pattern0" width="1" height="1">
-<use xlink:href="#about_image0"/>
+<use xlink:href="#about_image0" transform="scale(.5, .5)"/>
 </pattern>
 <pattern id="about_pattern1" width="1" height="1">
-<use xlink:href="#about_image0" />
+<use xlink:href="#about_image0" transform="scale(.5, .5)"/>
 </pattern>
 <linearGradient id="about_paint0_linear" x1="400" y1="347" x2="62.5852" y2="81.9101" gradientUnits="userSpaceOnUse">
 <stop stop-color="#2877B2" stop-opacity="0"/>
@@ -40,9 +41,28 @@
 <clipPath id="about_clip0">
 <rect width="257" height="326" fill="white" transform="translate(56.9979 7.9989)"/>
 </clipPath>
-<image id="about_image0" width="243" height="388" xlink:href="/images/about/mikedesnoo.png"></image>
+<image v-if="image.src" id="about_image0" width="490" height="776" :xlink:href="image.src"></image>
 </defs>
 </svg>
 
 </div>
 </template>
+
+<script>
+export default {
+  data(){
+    return {
+      image: {
+        src: null,
+        png: '/images/about/mikedesnoo.png',
+        webp: '/images/about/mikedesnoo.webp'
+      }
+    }
+  },
+  async mounted(){
+    let { webp, png } = this.image;
+    const preload = await this.$preload.load({src: webp, fallback: png});
+    this.image.src = preload.src;
+  }
+}
+</script>

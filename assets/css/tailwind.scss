@@ -14,14 +14,35 @@ svg{
     outline: none;
 }
 
-h2{
+button{
+    font: inherit;
+}
+
+.before\:title-bg,
+.before\:menu-item-bg{
     &:before{
         content: '';
-        position: absolute;
         width: calc(100% + 10px);
-        height: 50%;
+        height: 35%;
         left: -5px;
-        bottom: 0;
+        bottom: 15%;
+        transform: scale(0, 1);
+        transition: transform .4s ease;
+        @apply absolute;
+        @apply origin-left;
+        @apply bg-yellow-mid;
+    }
+
+    &.menu-item-bg{
+        &:before{
+            left: -4px;
+            width: calc(100% + 8px);
+        }
+        &:hover{
+            &:before{
+                transform: scale(1, 1);
+            }
+        }
     }
 }
 
@@ -44,8 +65,8 @@ textarea:-webkit-autofill:hover textarea:-webkit-autofill:focus,
 select:-webkit-autofill,
 select:-webkit-autofill:hover,
 select:-webkit-autofill:focus {
--webkit-box-shadow: 0 0 0px 1000px #ffffff inset !important;
--webkit-text-fill-color: #3C5768!important;
+    -webkit-box-shadow: 0 0 0px 1000px #ffffff inset !important;
+    -webkit-text-fill-color: #3C5768!important;
 }
 
 button:focus,
@@ -67,11 +88,6 @@ svg{
 }
 
 @variants before, after{
-    .border-triangle{
-        border-left: 12px solid transparent;
-        border-right: 12px solid transparent;
-        border-top: 12px solid #414141;
-    }
     .empty-content{
         content: "";
     }

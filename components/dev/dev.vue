@@ -11,23 +11,13 @@
     lg:mb-0
 ">
     <div class="flex flex-col justify-center items-start relative z-10 w-full flex-shrink-0 sm:w-280px lg:w-363px">
-        <h2 class="
-            text-blue-dark
-            md:text-5.5xl
-            text-4xl
-            inline-block
-            font-black
-            relative
-            before:bg-yellow-light
-        ">
-            <span class="relative">Dev</span>
-        </h2>
+        <section-title title="Dev" />
         <ul 
             class="hidden sm:flex relative text-md lg:text-lg flex-col font-normal leading-wider mt-6 bg-white shadow-md lg:shadow-none lg:bg-none rounded-lg px-4 -ml-4"
         >
             <div 
                 v-if="$mq === 'lg' || $mq === 'md'"
-                class="absolute left-100 top-0 z-10 triangle border-14 top-6 transition-transform transition-400"
+                class="absolute left-full z-10 triangle border-14 top-.06 transition-transform transition-400"
                 :style="`transform: translateY(${translateTriangle}px) translateX(-1px)`"
             ></div>
             <template v-for="(item, index) in items">
@@ -40,7 +30,7 @@
                         'py-4 px-6 relative',
                         'flex flex-col cursor-pointer',
                         'overflow-y-hidden transition-all transition-400',
-                        'border-b border-light-gray',
+                        'border-b border-gray-light',
                         index === items.length - 1 ? 'border-none lg:border-b' : null,
                         activeItem === index ? 
                         'pb-dev-item-active h-177px lg:h-150px' : 
@@ -63,8 +53,8 @@
             </template>
         </ul>
     </div>
-    <div class="flex w-full relative sm:static lg:relative justify-center mt-8 sm:mt-0 lg:pt-6 flex flex-col items-end flex-grow  sm:max-w-267px md:max-w-616px">
-        <blob class="absolute w-full top-50 sm:top-15 md:top-0 transform-dev-mobile-blob sm:transform-dev-blob -right-1 lg:right-0" :overlay="items[activeItem].overlay"  :item="activeItem" />
+    <div class="flex w-full relative sm:static lg:relative justify-center mt-8 sm:mt-0 lg:pt-7 flex flex-col items-end flex-grow  sm:max-w-267px md:max-w-616px">
+        <blob class="absolute w-full top-.5 sm:top-.15 md:top-0 transform-dev-mobile-blob sm:transform-dev-blob -right-1 lg:right-0" :overlay="items[activeItem].overlay"  :item="activeItem" />
         <div class="relative flex w-full sm:max-w-267px lg:max-w-616px sm:transform-mobile-top lg:transform-none items-center">
             
             <div @click="setImage('previous')" class="sm:hidden -ml-15px xs:ml-0 shadow-lg active:shadow flex items-center justify-center bg-white flex-shrink-0 rounded-full w-14 h-14 xs:w-16 xs:h-16">
@@ -75,8 +65,7 @@
                 </i>
             </div>
             
-            <chrome-desktop class="hidden w-full lg:block" :item="items[activeItem]" />
-            <chrome-mobile @setImage="setImage" class="mx-4 xs:mx-8 sm:mx-0 max-w-267px block w-full lg:hidden" :item="activeItem" />
+            <carousel :type="type" :items.sync="items" :active="activeItem" />
 
             <div @click="setImage('next')" class="sm:hidden -mr-15px xs:mr-0 bg-white shadow-lg active:shadow flex items-center justify-center flex-shrink-0 rounded-full w-14 h-14 xs:w-16 xs:h-16">
                 <i class="text-gray">
@@ -86,18 +75,18 @@
                 </i>
             </div>
 
-            <a :href="items[activeItem].link || items[activeItem].url" target="_blank" 
+            <a :href="items[activeItem].url" target="_blank" 
                 class="
                     lg:transition-color lg:hover:text-yellow-mid lg:hover:bg-none
-                    transition-bg hover:bg-yellow-press transition-400
+                    transition-bg hover:bg-yellow-dark transition-400
                     shadow-md active:shadow lg:shadow-none
                     rounded-full lg:rounded-none bg-yellow-mid lg:bg-none px-6 lg:px-0 py-2 lg:py-0
-                    absolute text-xl justify-center right-0 z-10 top-100
-                    text-white transition-400 flex space-x-3 right-50 translate-link-center lg:mt-6 lg:right-9 lg:translate-none
+                    absolute text-xl justify-center right-0 z-10 top-full
+                    text-white transition-400 flex space-x-3 right-.5 translate-link-center lg:mt-.03 xl:mt-6 lg:right-.09 lg:translate-none
                 "
             >
                 <icons icon="link" :color="true" :size="21" class="flex justify-center items-center text-white lg:text-yellow-mid"/>
-                <span class="font-semibold translate-fix-text">Website</span>
+                <span class="font-semibold text-shadow-md">Website</span>
             </a>
         </div>
     </div>
@@ -105,50 +94,81 @@
 </template>
 
 <script>
-import blob from './blob/blob.vue';
-import chromeDesktop from './chrome/desktop.vue';
-import chromeMobile from './chrome/mobile.vue';
-import icons from './icons/icons.vue';
+import blob from './blob/blob';
+import carousel from './carousel/carousel';
+import icons from '~/components/ui/icons';
+import sectionTitle from '~/components/ui/sectionTitle';
 export default {
+    components: {
+        blob,
+        carousel,
+        icons,
+        sectionTitle
+    },
     computed:{
         translateTriangle(){
             return this.activeItem * 75;
         }
     },
+    watch: {
+        $mq:{
+            immediate: true,
+            handler(query){
+                let type = 'mobile';
+                if(query === 'xl'){
+                    type = 'desktop';
+                }
+
+                const activeItem = this.items[this.activeItem];
+                if(activeItem[type] === false){
+                    this.setImage('previous');
+                }
+
+                this.type = type;
+            }
+        }
+    },
     data(){
         return {
+            type: null,
             items: [
                 {
                     name: 'Nativeway',
+                    webp: 'nativeway.webp',
+                    jpg: 'nativeway.jpg',
                     url: 'https://nativeway.com.uy',
                     icon: 'nuxt',
                     overlay: '35256d',
                     content: 'Website for an English Academy in Montevideo, made with <b class="font-medium">Nuxt</b>'
                 },
                 {
-                    name: 'Hendrikx-ITC',
-                    url: 'https://hendrikx-itc.nl',
-                    link: 'https://dev.stijlbreuk.nu/hendrikx-itc',
-                    icon: 'wordpress',
-                    overlay: '4f5e8b',
-                    content: '<b class="font-medium">Wordpress</b> site for a provider of data management solutions.'
-                },
-                {
-                    name: 'Custom Fotowand',
-                    url: 'https://customfotowand.nl',
-                    link: 'https://ovns3.csb.app',
-                    icon: 'vue',
-                    overlay: '28a254',
-                    content: 'A <b class="font-medium">Vue</b> based tool for desiging your own custom wallpaper.'
-                },
-                {
                     name: 'Quality Connection',
+                    webp: 'quality-connection.webp',
+                    jpg: 'quality-connection.jpg',
                     url: 'https://www.quality-connection.com',
-                    link: 'http://www.quality-connection.com',
                     icon: 'html5',
                     overlay: '2a461c',
                     content: '<b class="font-medium">HTML5</b> and <b class="font-medium">CSS3</b> website for a food quality inspection startup'
                 },
+                {
+                    name: 'Track and trace',
+                    webp: 'track-and-trace.webp',
+                    jpg: 'track-and-trace.jpg',
+                    url: 'track.cinematomedia.com/cinematomedia?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcm9qZWN0Ijoic3VwZXJ2aXNvciJ9.0Cccr3zXYGOEWSnbVpNYXvM8aRZLnzFHSkYlnS4Gf-A',
+                    icon: 'vue',
+                    overlay: '4f5e8b',
+                    mobile: false,
+                    content: '<b class="font-medium">Vue</b> app for clients to track project progression.'
+                },
+                // {
+                //     name: 'Custom Fotowand',
+                //     webp: 'fotowand.webp',
+                //     jpg: 'fotowand.jpg',
+                //     url: 'https://ovns3.csb.app',
+                //     icon: 'vue',
+                //     overlay: '28a254',
+                //     content: 'A <b class="font-medium">Vue</b> component for desiging your own custom wallpaper.'
+                // },
             ],
             activeItem: 0,
             
@@ -164,19 +184,13 @@ export default {
                 this.activeItem++;
                 return;
             }
-
+            
             if(this.activeItem === 0){
                 this.activeItem = this.items.length - 1;
                 return;
             }
             this.activeItem--;
         },
-    },
-    components: {
-        blob,
-        chromeDesktop,
-        chromeMobile,
-        icons
     }
 }
 </script>

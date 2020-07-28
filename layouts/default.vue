@@ -11,24 +11,22 @@
     mds_layout
     bg-light
   ">
-    <nuxt 
-      class="
-        py-4
-        sm:py-6
-        md:py-10
-        xl:max-w-1100
-        container
-        mx-auto
-      "
-    />
+    <!--
+      $mq creates jump content due to the default breakpoint used from SSR
+      We don't need SSR anyways as this protoflio will be used for static rendering
+     -->
+    <client-only>
+      <nuxt 
+        style="margin: 0 auto;"
+        class="
+          py-4
+          sm:py-6
+          md:py-10
+          xl:max-w-1100
+          container
+          mx-auto
+        "
+      />
+    </client-only>
   </div>
 </template>
-
-<script>
-//import {mapState} from 'vuex';
-
-export default {
-  computed: {
-  }
-}
-</script>

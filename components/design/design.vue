@@ -8,22 +8,12 @@
         mt-32
     "   
 >
-    <h2 class="
-        text-blue-dark
-        md:text-5.5xl
-        text-4xl
-        inline-block
-        font-black
-        relative
-        before:bg-yellow-light
-    ">
-        <span class="relative">Design</span>
-    </h2>
+    <section-title title="Design" />
     <div
         @swipeLeft="setImage('next')"
         @swipeRight="setImage('previous')"
         @touchstart="startTouchWrapper"
-        class="relative z-10 flex lg:block flex-row w-320 lg:w-full mt-6 lg:mt-0 transition-400 transition-transform"
+        class="relative z-10 flex lg:block flex-row w-3.2 lg:w-full mt-6 lg:mt-0 transition-400 transition-transform"
         :style="[wrapperOffset ? {transform: `translateX(${wrapperOffset})`} : null, {width: scrollWrapperWidth}, {transition: moving ? 'none' : null}]"
     >
         <div
@@ -48,28 +38,42 @@
                 <div :class="[
                         'inline-flex w-60vw md:w-478px justify-center px-0',
                         image.size === 'small' ? 'lg:px-12 xl:px-8' : null,
-                        'lg:hover:scale-grow lg:scale-none lg:transition-400 lg:transition-transform'
+                        'lg:hover:scale-105 lg:scale-none lg:transition-400 lg:transition-transform'
                     ]"
                 >
                     <a class="inline-block" @click="toImage($event, image)" :href="`design/${image.design}`">
-                        <img class="rounded-lg w-full" 
-                            :class="[
-                                'cursor-pointer transition-shadow transition-400',
-                                getShadows(image, index)
-                            ]" 
-                            :src="image.src"
-                        />
+                        <picture>
+                            <source
+                                v-for="src in [image.src, image.fallback]"
+                                :key="`design-image-${index}-src-${src}`"
+                                class="rounded-lg w-full" 
+                                :class="[
+                                    'cursor-pointer transition-shadow transition-400',
+                                    getShadows(image, index)
+                                ]" 
+                                :srcset="src"
+                                :type="src.includes('webp') ? 'image/webp' : 'image/png'"
+                            />
+                            <img class="rounded-lg w-full" 
+                                :class="[
+                                    'cursor-pointer transition-shadow transition-400',
+                                    getShadows(image, index)
+                                ]" 
+                                :src="image.src"
+                            />
+                        </picture>
                     </a>
                 </div>
             </div>
         </div>
     </div>
-    <blobs class="z-0 absolute top-30 hidden lg:block w-full h-full" />
+    <blobs class="z-0 absolute top-.3 hidden lg:block w-full h-full" />
 </section>
 </template>
 
 <script>
-import blobs from './blobs/blobs.vue';
+import blobs from './blobs/blobs';
+import sectionTitle from '~/components/ui/sectionTitle';
 export default {
     data(){
         return {
@@ -81,31 +85,36 @@ export default {
             wrapperOffsetOrigin: null,
             images: [{
                 active: true,
-                src: '/images/design/logopicker-thumb.jpg',
+                src: '/images/design/logopicker-thumb.webp',
+                fallback: '/images/design/logopicker-thumb.png',
                 design: 'logopicker',
                 size: 'big',
                 type: 'light'
             },{
                 active: false,
-                src: '/images/design/adoption-thumb.jpg',
-                design: 'adoption',
+                src: '/images/design/adoption-support-alliance-thumb.webp',
+                fallback: '/images/design/adoption-support-alliance-thumb.png',
+                design: 'adoption-support-alliance',
                 size: 'small'
             },{
                 active: false,
-                src: '/images/design/influence-thumb.jpg',
+                src: '/images/design/influence-thumb.webp',
+                fallback: '/images/design/influence-thumb.png',
                 design: 'influence',
                 size: 'small'
             },{
                 active: false,
-                src: '/images/design/pwrful-thumb.jpg',
-                design: 'pwrful',
+                src: '/images/design/powrful-thumb.webp',
+                fallback: '/images/design/powrful-thumb.png',
+                design: 'powrful',
                 size: 'big'
             }],
             activeIndex: 0
         }
     },
     components: {
-        blobs
+        blobs,
+        sectionTitle
     },
     methods: {
         getShadows(item, index){

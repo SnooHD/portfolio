@@ -5,9 +5,9 @@
             <blob :class="[`
                 absolute
                 top-0
-                xl:-right-11
-                lg:-right-14 lg:transform-none
-                md:-right-10 md:transform-header-blob md:transition-none md:will-change-none
+                xl:-right-.11
+                lg:-right-.14 lg:transform-none
+                md:-right-.1 md:transform-header-blob md:transition-none md:will-change-none
                 transition-1000 transition-transform transition-ease will-change-transform
                 pointer-events-none
             `,
@@ -16,7 +16,7 @@
             <nav>
                 <menu-block :class="[`
                     text-white font-bold tracking-wider flex
-                    lg:text-lg md:space-x-4 lg:space-x-6
+                    lg:text-lg md:space-x-4 lg:space-x-8
                     md:text-base md:flex-row md:translate-none md:h-auto md:px-0 md:static md:mt-0 md:transition-none  md:will-change-none
                     text-xl flex-col items-end absolute top-0 right-0 lg:px-10 mt-8 items-center justify-between h-180px
                     transition-transform transition-ease will-change-transform
@@ -53,7 +53,7 @@
                 font-black
                 leading-tighter
             ">
-                Hello there,<br/> <span class="tracking-tight">I'm Mike:</span>
+                Hello there,<br/> <span class="tracking-tight">I'm Mike!</span>
             </h1>
             <span class="
                 mt-2
@@ -75,7 +75,6 @@
             >
                 <button v-scroll-to="'#dev'" class="
                     group relative z-0
-                    transition-bg transition-400
                     text-white font-bold
                     text-xl tracking-wider px-6 py-2 lg:px-10 lg:py-3
                 ">
@@ -85,9 +84,9 @@
                         class="
                             will-change-transform
                             absolute left-0 top-0 w-full h-full z-0
-                            transition-400 transition-transform
+                            transition-400 transition-all
                             shadow-md group-active:shadow
-                            group-hover:bg-blue-press
+                            group-hover:bg-blue-dark
                             rounded-full bg-blue-mid
                         "
                         :class="[
@@ -95,7 +94,7 @@
                         ]"
                     />
                     <span
-                        :style="`transform: translate3d(${textX}px, ${textY}px, 0px) scale(${textX ? '1.05' : '1'})`"
+                        :style="`transform: translate3d(${textX}px, ${textY - 1}px, 0px) scale(${textX ? '1.05' : '1'})`"
                         class="
                             will-change-transform
                             relative z-10 inline-block
@@ -116,8 +115,8 @@
 </template>
 
 <script>
-import menuBlock from './menu/menu.vue';
-import blob from './blob/blob.vue';
+import menuBlock from './menu/menu';
+import blob from './blob/blob';
 
 export default {
     data(){

@@ -1,10 +1,12 @@
 <template>
-<header id="home">
+<header id="home" class="relative">
     <div class="flex flex-row justify-end">
         <div>
             <blob :class="[`
                 absolute
-                top-0
+                -top-4
+                sm:-top-6
+                md:-top-10
                 xl:-right-.11
                 lg:-right-.14 lg:transform-none
                 md:-right-.1 md:transform-header-blob md:transition-none md:will-change-none
@@ -52,22 +54,61 @@
                 text-5xl
                 font-black
                 leading-tighter
+                overflow-hidden
             ">
-                Hello there,<br/> <span class="tracking-tight">I'm Mike!</span>
+                <span
+                    class="
+                        inline-block
+                        transition-transform
+                        transition-400
+                    "
+                    :class="
+                        fontsPreloaded ? 'translate-none' : '-translate-x-100'
+                    "
+                >Hello there,</span><br/>
+                <span 
+                    class="
+                        inline-block
+                        tracking-tight
+                        transition-transform
+                        transition-400
+                        delay-200
+                    "
+                    :class="
+                        fontsPreloaded ? 'translate-none' : '-translate-x-100'
+                    "
+                >
+                    I'm Mike!
+                </span>
             </h1>
-            <span class="
-                mt-2
-                font-medium
-                lg:text-2.5xl
-                text-2xl
-            ">
+            <span 
+                class="
+                    mt-2
+                    font-medium
+                    lg:text-2.5xl
+                    text-2xl
+                    inline-block
+                    transition-all
+                    transition-400
+                    delay-400
+                "
+                :class="
+                    fontsPreloaded ? 'translate-none opacity-100' : '-translate-y-100 opacity-0'
+                "
+            >
                 A professional clicker.
             </span>
         </div>
-        <div class="
-            lg:mt-6
-            flex flex-col-reverse mt-6 items-start
-        ">
+        <div
+            class="
+                lg:mt-6
+                flex flex-col-reverse mt-6 items-start
+                transition-400 delay-600 transition-opacity
+            "
+            :class="
+                fontsPreloaded ? 'opacity-100' : 'opacity-0'
+            "
+        >
             <div @mousemove="$mq === 'xl' ? inspectCursor($event) : null" @mouseleave="$mq === 'xl' ? ignoreCursor($event) : null"
                 class="
                     button-wrapper p-4 -ml-4 -mt-4 group
@@ -130,7 +171,8 @@ export default {
             backgroundX: 0,
             backgroundY: 0,
             textX: 0,
-            textY: 0
+            textY: 0,
+            loadedFontsWeights: []
         }
     },
     components: {
@@ -144,6 +186,20 @@ export default {
         const width = background.offsetWidth;
         const height = background.offsetHeight;
         this.inspectButton = {width, height}
+    },
+    computed: {
+        fontsPreloaded(){
+           return (
+               this.loadedFontsWeights.includes(900)
+               && this.loadedFontsWeights.includes(500)
+               && this.loadedFontsWeights.includes(700)
+           )
+        }
+    },
+    watch: {
+        '$preload.font'({ weight }){
+            this.loadedFontsWeights.push(weight);
+        }
     },
     methods: {
         inspectCursor(e){

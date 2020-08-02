@@ -61,7 +61,7 @@ export default {
   },
   async mounted(){
     let { webp, png } = this.image;
-    const preload = await this.$preload.load({src: webp, fallback: png});
+    const preload = await this.$preload.loadImage({src: webp, fallback: png});
     this.image.src = preload.src;
   }
 }

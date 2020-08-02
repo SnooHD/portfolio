@@ -11,18 +11,19 @@
         <div 
           class="relative w-full pb-1.777"
           :class="type === 'mobile' ? 'pb-1.777' : 'pb-.63'" 
+          @swipeLeft="$emit('setImage', 'next'); swiped = true"
+          @swipeRight="$emit('setImage', 'previous'); swiped = true"
+          @touchstart.prevent="startTouchWrapper"
         >
             <div class="absolute w-full h-full left-0 top-0">
                 <div ref="scrollContainer" class="bg-white overflow-x-hidden overflow-y-auto h-full w-full">
                     <div ref="scrollTo"></div>
                     <div
-                        @swipeLeft="$emit('setImage', 'next')"
-                        @swipeRight="$emit('setImage', 'previous')"
-                        @touchstart="startTouchWrapper"
-                        class="flex transition-transform transition-400 will-change-transform" 
-                        :style="`transform: translateX(${-wrapperOffset}px); width: ${100 * carouselItems.length}%; overflow-y:hidden; max-height: ${imageHeight}px`"
+                        class="flex transition-400 will-change-transform"
+                        :class="swiping ? 'transition-none' : 'transition-transform'"
+                        :style="`transform: translateX(${-wrapperOffset}px); width: ${100 * items.length}%; overflow-y:hidden; max-height: ${imageHeight}px`"
                     >
-                      <template v-for="item in carouselItems">
+                      <template v-for="item in items">
                         <div
                             :key="`${type}-item-${item.name}`"
                         >
@@ -68,8 +69,9 @@ export default {
         wrapperOffset: 0,
         wrapperOffsetOrigin: null,
         touchStart: null,
-        moving: null,
-        swiped: null,
+        swipeLeft: null,
+        swipeRight: null,
+        swiping: null,
         preloaded: false,
         desktopLoaded: false,
         mobileLoaded: false,
@@ -87,16 +89,11 @@ export default {
     beforeDestroy(){
       window.removeEventListener('resize', this.setContainerWidth);
     },
-    computed: {
-      carouselItems(){
-        return this.items.filter(item => typeof item[this.type] === 'undefined' || item[this.type]);
-      }
-    },
     methods: {
       async preload(){
 
         // async request do not work in forEach loops
-        for(let i=0; i<this.carouselItems.length; i++){
+        for(let i=0; i<this.items.length; i++){
           let item = this.items[i];
           
           let { webp, jpg } = item;
@@ -113,7 +110,7 @@ export default {
           }
 
           const fallback = `${prefix}/${jpg}`;
-          const image = await this.$preload.load({ src, fallback });
+          const image = await this.$preload.loadImage({ src, fallback });
 
           this.$set(this.items, i, {
             ...item,
@@ -126,8 +123,6 @@ export default {
         this.$emit('update:items', this.items);
       },
       async init(){
-        console.log(this.active);
-        console.log(this.$refs.scrollContainer.querySelectorAll('img'));
         const { offsetWidth, offsetHeight } = this.$refs.scrollContainer.querySelectorAll('img')[this.active];
         this.containerWidth = Math.floor(offsetWidth);
         this.imageHeight = Math.floor(offsetHeight);
@@ -138,6 +133,7 @@ export default {
         }
         
         this.swiped = false;
+        this.swiping = true;
         this.touchStart = e.touches[0].clientX;
         
         this.wrapperOffsetOrigin = this.wrapperOffset;
@@ -146,24 +142,16 @@ export default {
       },
       moveWrapper(e){
         const touchDistance = e.touches[0].clientX - this.touchStart;
-        this.moving = true;
         this.wrapperOffset = this.wrapperOffsetOrigin - touchDistance;
       },
       endTouchWrapper(e){
-        this.moving = false;
+        this.swiping = false;
         e.target.removeEventListener('touchmove', this.moveWrapper);
         e.target.removeEventListener('touchend', this.endTouchWrapper);
+
         if(!this.swiped){
           this.wrapperOffset = this.wrapperOffsetOrigin;
-          return;
         }
-
-        if(this.wrapperOffsetOrigin > this.wrapperOffset){
-          this.$emit('setImage', 'previous');
-          return;
-        }
-
-        this.$emit('setImage', 'next');
       },
       setContainerWidth(){
         if(this.containerWidth === null){

@@ -12,7 +12,7 @@
     <div
         @swipeLeft="setImage('next')"
         @swipeRight="setImage('previous')"
-        @touchstart="startTouchWrapper"
+        @touchstart.prevent="startTouchWrapper"
         class="relative z-10 flex lg:block flex-row w-3.2 lg:w-full mt-6 lg:mt-0 transition-400 transition-transform"
         :style="[wrapperOffset ? {transform: `translateX(${wrapperOffset})`} : null, {width: scrollWrapperWidth}, {transition: moving ? 'none' : null}]"
     >

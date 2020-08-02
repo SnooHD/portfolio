@@ -65,7 +65,7 @@
                 </i>
             </div>
             
-            <carousel :type="type" :items.sync="items" :active="activeItem" />
+            <carousel @setImage="setImage($event)" :type="type" :items.sync="carouselItems" :active="activeItem" />
 
             <div @click="setImage('next')" class="sm:hidden -mr-15px xs:mr-0 bg-white shadow-lg active:shadow flex items-center justify-center flex-shrink-0 rounded-full w-14 h-14 xs:w-16 xs:h-16">
                 <i class="text-gray">
@@ -108,6 +108,16 @@ export default {
     computed:{
         translateTriangle(){
             return this.activeItem * 75;
+        },
+        carouselItems: {
+            get(){
+                return this.items.filter(item => typeof item[this.type] === 'undefined' || item[this.type]);
+            },
+            set(items){
+                this.items = this.items.map((item, index) => {
+                    return items[index] || item;
+                })
+            }
         }
     },
     watch: {
@@ -177,7 +187,7 @@ export default {
     methods: {
         setImage(dir){
             if(dir === 'next'){
-                if(this.activeItem === this.items.length - 1){
+                if(this.activeItem === this.carouselItems.length - 1){
                     this.activeItem = 0;
                     return;
                 }
@@ -186,7 +196,7 @@ export default {
             }
             
             if(this.activeItem === 0){
-                this.activeItem = this.items.length - 1;
+                this.activeItem = this.carouselItems.length - 1;
                 return;
             }
             this.activeItem--;

@@ -1,14 +1,23 @@
 <template>
   <div 
-    class="relative transition-400 transition-opacity"
-    @transitionend.self="init"
-    :class="loaded ? 'opacity-100 pointer-events-all' : 'opacity-0 pointer-events-none'"
+    class="relative"
   >
-    <header-block />
-    <intro />
-    <dev />
-    <design />
-    <contact />
+    <template v-for="(section, index) in sections">
+      <component
+        ref="section"
+        :is="section"
+        :key="`portfolio-section-${index}`"
+        class="
+          transition-all
+          will-change-transform
+          transition-400
+          opacity-0
+          translate-y-40px
+          in-view:opacity-100
+          in-view:translate-none
+        "
+      />
+    </template>
   </div>
 </template>
 
@@ -35,6 +44,43 @@ export default {
       intersectionData: [],
       animating: false,
       loaded: false,
+      fontsLoaded: true,
+      sections: [
+        'header-block',
+        'intro',
+        'dev',
+        'design',
+        'contact'
+      ],
+      headerImages: [],
+      introImages: [{
+        src: '/images/about/mikedesnoo.png',
+        fallback: '/images/about/mikedesnoo.webp'
+      }],
+      devImages: [{
+        src: 'nativeway.webp',
+        fallback: 'nativeway.jpg',
+      },{
+        src: 'quality-connection.webp',
+        fallback: 'quality-connection.jpg',
+      },{
+        src: 'track-and-trace.webp',
+        fallback: 'track-and-trace.jpg',
+      }],
+      designImages: [{
+        src: '/images/design/logopicker-thumb.webp',
+        fallback: '/images/design/logopicker-thumb.png',
+      },{
+        src: '/images/design/adoption-support-alliance-thumb.webp',
+        fallback: '/images/design/adoption-support-alliance-thumb.png',
+      },{
+        src: '/images/design/influence-thumb.webp',
+        fallback: '/images/design/influence-thumb.png',
+      },{
+        src: '/images/design/powrful-thumb.webp',
+        fallback: '/images/design/powrful-thumb.png',
+      }],
+      contactImages: []
     }
   },
   async mounted(){
@@ -44,37 +90,50 @@ export default {
       this.$scrollTo(this.$route.hash, 1);
     }
 
+    // preload fonts above the fold
+    await this.preloadFonts();
+
     await this.$nextTick();
-    this.loaded = true;
+    this.init();
   },
   methods: {
+    async preloadFonts(){
+      const weights = [900, 700, 500];
+
+      for(let i=0; i<weights.length; i++){
+        const weight = weights[i];
+        const font = {
+          name: 'GalanoGrotesque',
+          style: 'normal',
+          weight
+        }
+
+        await this.$preload.loadFont(font)
+      }
+
+      this.fontsLoaded = true;
+
+      return
+    },
     init(){
       this.initScroll();
     },
     initScroll(){
       this.screenHeight = window.innerHeight;
       
-      const elements = document.querySelectorAll('[scroll-animate]');
-      elements.forEach((element, index) => {
-          this.intersectionData[index] = {
-            previousY: 0,
-            previousRatio: 0
-          }
+      const components = this.$refs.section.map(component => component.$el);
+      const animate = Array.from(document.querySelectorAll('[scroll-animate]'));
 
-          const observer = new IntersectionObserver(this.isInView, {
-            threshold: [0, 1],
-            rootMargin: '0px 0px 0px 0px'
-          });
-          observer.observe(element);
+      const elements = components.concat(animate);
+      elements.forEach((element, index) => {
+
+        const observer = new IntersectionObserver(this.isInView, {
+          threshold: [0, 1],
+          rootMargin: '0px 0px 0px 0px'
+        });
+        observer.observe(element);
+
       });
-      // this.elements = elements.map(element => {
-      //   const top = element.getBoundingClientRect().top;
-      //   return {
-      //     element,
-      //     top,
-      //     inView: false
-      //   }
-      // });
     },
     isInView(entries, observer){
       entries.forEach((entry, index) => {
@@ -82,19 +141,18 @@ export default {
         let currentRatio = entry.intersectionRatio;
         const isIntersecting = entry.isIntersecting;
         const element = entry.target;
-        const { previousY, previousRatio } = this.intersectionData[index];
 
         // Scrolling down/up
         let inView = false;
-        if (currentY < previousY) {
-          if (currentRatio > previousRatio && isIntersecting) {
+        if (currentY > 0) {
+          if (currentRatio >= 0 && isIntersecting) {
             // Scrolling down enter
             inView = true;
           } else {
             // Scrolling down leave
           }
-        } else if (currentY > previousY && isIntersecting) {
-          if (currentRatio > previousRatio) {
+        } else if (currentY <= 0) {
+          if (currentRatio <= 1 && isIntersecting) {
             // Scrolling up enter
             inView = true;
           } else {
@@ -108,20 +166,15 @@ export default {
           element.classList.remove('s_in-view');
         }
 
-        this.intersectionData[index] = {
-          previousY: currentY,
-          previousRatio: currentRatio
-        }
-
       })
     },
   },
   head(){
     return {
-        title: 'Snoo - Portfolio',
+      title: 'Snoo - Portfolio',
       meta: [{
         name: 'keywords',
-        content: 'Personal, Portfolio, Creative, Design, Development, Nuxt, Vue, CSS, CSS3, HTML, HTML5, JS, Javascript'
+        content: 'Personal, Portfolio, Creative, Design, Development, Nuxt, Vue, CSS, CSS3, HTML, HTML5, JS, Javascript, TS, Typescript'
       },{
         name: 'description',
         content: 'Hello! My name is Mike de Snoo, but you can call me Snoo. I am a graphic designer & developer from The Netherlands.'

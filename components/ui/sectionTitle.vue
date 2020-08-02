@@ -25,7 +25,7 @@
             transition-transform
             transition-400
             ease-easeOutBack
-            group-in-view:-translate-y-.8
+            in-view-child:-translate-y-.8
         "
     >
         {{ char === ' ' ? '&nbsp;' : char }}

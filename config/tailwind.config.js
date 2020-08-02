@@ -60,8 +60,11 @@ module.exports = {
       'default': '0ms',
       '0': '0ms',
       '100': '100ms',
-      '250': '250ms',
+      '200': '200ms',
+      '300': '300ms',
+      '400': '400ms',
       '500': '500ms',
+      '600': '600ms',
       '750': '750ms',
       '1000': '1000ms',
     },
@@ -105,6 +108,10 @@ module.exports = {
       'sm-m-blob-active': ['-56%', '-34%'],
       'x-12': ['12px', '0'],
       'x-120px': ['-120px', '0'],
+      'x-100': ['100%', '0'],
+      '-x-100': ['-100%', '0'],
+      '-y-100': ['0', '-100%'],
+      'y-40px': ['0', '40px'],
       '-y10': ['0', '-10%'],
       '-x-2px': ['-2px', '0'],
       'contact-send': ['200%', '-150%'],
@@ -173,7 +180,11 @@ module.exports = {
         '240px': '240px',
         '180px': '180px'
       },
-      inset: {        
+      inset: {
+        '-4': '-1rem',
+        '-6': '-1.5rem',
+        '-10': '-2.5rem',
+
         '25px': '25px',
 
         '-.06': '-.06%',
@@ -245,7 +256,7 @@ module.exports = {
   variants: { // all the following default to ['responsive']
     transform: ['responsive', 'hover', 'in-view', 'group-hover', 'before', 'after'],
     transformOrigin: ['responsive'],
-    translate: ['responsive', 'hover', 'group-hover', 'in-view', 'group-in-view'],
+    translate: ['responsive', 'hover', 'group-hover', 'in-view', 'group-in-view', 'in-view-child'],
     scale: ['responsive', 'hover', 'in-view', 'after', 'before', 'hover:before', 'in-view:before'],
     rotate: ['responsive'],
     skew: ['responsive'],
@@ -261,7 +272,7 @@ module.exports = {
     transitionTimingFunction: ['responsive', 'before', 'after', 'group-hover'],
     transitionDelay: ['responsive', 'before', 'after'],
     willChange: ['responsive', 'before', 'after'],
-    opacity: ['responsive', 'group-hover', 'hover'],
+    opacity: ['responsive', 'group-hover', 'hover', 'in-view'],
     pointerEvents: ['responsive', 'group-hover'],
     position: ['responsive', 'before', 'after'],
     inset: ['responsive', 'before', 'after'],
@@ -303,6 +314,13 @@ module.exports = {
       })
     },
     function({ addVariant, e }) {
+      addVariant('in-view:before', ({ modifySelectors, separator }) => {
+        modifySelectors(({ className }) => {
+          return `.s_in-view.${e(`in-view${separator}before${separator}${className}`)}:before`
+        })
+      })
+    },
+    function({ addVariant, e }) {
       addVariant('group-in-view', ({ modifySelectors, separator }) => {
         modifySelectors(({ className }) => {
           return `.s_in-view .${e(`group-in-view${separator}${className}`)}`
@@ -310,9 +328,9 @@ module.exports = {
       })
     },
     function({ addVariant, e }) {
-      addVariant('in-view:before', ({ modifySelectors, separator }) => {
+      addVariant('in-view-child', ({ modifySelectors, separator }) => {
         modifySelectors(({ className }) => {
-          return `.s_in-view.${e(`in-view${separator}before${separator}${className}`)}:before`
+          return `.s_in-view > .${e(`in-view-child${separator}${className}`)}`
         })
       })
     },

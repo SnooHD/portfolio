@@ -33,7 +33,7 @@ module.exports = {
   ** Plugins to load before mounting the App
   */
   plugins: [
-    { src: '~/plugins/anime.js', ssr: false },
+    { src: '~/plugins/anime', ssr: false },
     { src: '~/plugins/preload', ssr: false },
     { src: '~/plugins/touch', ssr: false },
   ],

@@ -1,6 +1,6 @@
 <template>
 <header id="home" class="relative">
-    <div class="flex flex-row justify-end">
+    <div class="flex flex-row justify-end relative z-10">
         <div>
             <blob :class="[`
                 absolute
@@ -27,17 +27,30 @@
                 ]"/>
                 <div @click="mobileMenu = !mobileMenu" :class="[`
                     md:hidden md:transition-none md:will-change-none
-                    sm:block
+                    sm:block text-white
                     transition-750 transition-transform transition-ease will-change-transform cursor-pointer
                 `,
-                    mobileMenu ? 'translate-x-120px transition-delay-250' : 'translate-none transition-delay-0'
+                    mobileMenu ? 'translate-x-120px transition-delay-300' : 'translate-none transition-delay-0'
                 ]">
-                    <svg class="w-10 sm:w-12" height="45" viewBox="4 1 16 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <rect width="16px" height="1.75" transform="matrix(-1 0 0 1 16 0)" fill="white"/>
-                        <rect width="12px" height="1.75" transform="matrix(-1 0 0 1 16 4.5)" fill="white"/>
+                    <svg style="transform: translate(-10px, 15px);" height="26" viewBox="0 0 26 21" xmlns="http://www.w3.org/2000/svg">
+                        <rect
+                            class="transition-400 transition-transform"
+                            :transform="mobileMenu ? 'matrix(0.65,-0.65,0.65,0.65,14,12)' : 'matrix(1,0,0,1,0,0)'"
+                            x="0" y="0" width="26px" height="3.5" fill="currentColor"
+                        />
                         <rect 
-                            width="8px"
-                            height="1.75" transform="matrix(-1 0 0 1 16 9)" fill="white"/>
+                            :class="[`
+                                transition-200 transition-opacity
+                            `,
+                                mobileMenu ? 'opacity-0' : 'opacity-100'
+                            ]" 
+                            x="6" y="8.75" width="20px" height="3.5" fill="currentColor"
+                        />
+                        <rect 
+                            width="26px" x="0" y="0"
+                            :transform="mobileMenu ? 'matrix(0.65,0.65,-0.65,0.65,16,-5)' : 'matrix(.42,0,0,1,15,17.5)'"
+                            class="transition-400 transition-transform"
+                            height="3.5" fill="currentColor"/>
                     </svg>
                 </div>
             </nav>
@@ -47,7 +60,7 @@
         lg:mt-24
         mt-16
     ">
-        <div class="flex flex-col leading-tight text-blue-dark">
+        <div class="flex flex-col leading-tight text-blue-dark relative z-0">
             <h1 class="
                 lg:text-7xl
                 md:text-5.5xl

@@ -2,6 +2,7 @@
   <div 
     class="relative"
   >
+    <header-block />
     <template v-for="(section, index) in sections">
       <component
         ref="section"
@@ -46,7 +47,6 @@ export default {
       loaded: false,
       fontsLoaded: true,
       sections: [
-        'header-block',
         'intro',
         'dev',
         'design',
@@ -137,7 +137,7 @@ export default {
     },
     isInView(entries, observer){
       entries.forEach((entry, index) => {
-        const currentY = entry.boundingClientRect.y;
+        let currentY = entry.boundingClientRect.y;
         let currentRatio = entry.intersectionRatio;
         const isIntersecting = entry.isIntersecting;
         const element = entry.target;
@@ -145,14 +145,14 @@ export default {
         // Scrolling down/up
         let inView = false;
         if (currentY > 0) {
-          if (currentRatio >= 0 && isIntersecting) {
+          if (isIntersecting) {
             // Scrolling down enter
             inView = true;
           } else {
             // Scrolling down leave
           }
         } else if (currentY <= 0) {
-          if (currentRatio <= 1 && isIntersecting) {
+          if (isIntersecting) {
             // Scrolling up enter
             inView = true;
           } else {
@@ -163,7 +163,10 @@ export default {
         if(inView){
           element.classList.add('s_in-view');
         }else if(currentRatio === 0){
-          element.classList.remove('s_in-view');
+          // only remove for scroll-animate elements
+          if(element.hasAttribute('scroll-animate')){
+            element.classList.remove('s_in-view');
+          }
         }
 
       })

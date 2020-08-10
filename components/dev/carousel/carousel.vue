@@ -179,20 +179,28 @@ export default {
       active: {
         async handler(newItem, oldItem){
           const newImage = this.$refs.scrollContainer.querySelectorAll('img')[newItem];
-          this.imageHeight =  Math.floor(newImage.offsetHeight);
-
-          await this.$nextTick();
-
+          const imageHeight =  Math.floor(newImage.offsetHeight);
+          
           const scrollContainer = this.$refs.scrollContainer;
-          const scrollBottom = this.imageHeight - scrollContainer.offsetHeight;
+          this.wrapperOffset = this.containerWidth * this.active;
+
+          const scrollBottom = imageHeight - scrollContainer.offsetHeight;
           const currScroll = scrollContainer.scrollTop;
-          if(currScroll > scrollBottom){
-            scrollContainer.scrollTo(0, scrollBottom);
+          if(currScroll < scrollBottom){
+            this.imageHeight = imageHeight;
           }
 
-          this.wrapperOffset = this.containerWidth * this.active;
-          
-          scrollContainer.scrollTo({top: 0, behavior: 'smooth'});
+          this.$anime({
+            targets: scrollContainer,
+            scrollTop: 0,
+            duration: 400,
+            easing: 'linear',
+            complete: () => {
+              if(currScroll > scrollBottom){
+                this.imageHeight = imageHeight;
+              }
+            }
+          });
         }
       }
     }

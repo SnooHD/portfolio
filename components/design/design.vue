@@ -176,7 +176,7 @@ export default {
                         activeIndex = i - 1;
 
                         if(!this.images[activeIndex]){
-                            activeIndex = this.images.length - 2;
+                            activeIndex = this.images.length - 1;
                         }
                     }else{
                         activeIndex = i + 1;

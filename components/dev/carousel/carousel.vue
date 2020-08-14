@@ -11,16 +11,14 @@
         <div 
           class="relative w-full pb-1.777"
           :class="type === 'mobile' ? 'pb-1.777' : 'pb-.63'" 
-          @swipeLeft="$emit('setImage', 'next'); swiped = true"
-          @swipeRight="$emit('setImage', 'previous'); swiped = true"
-          @touchstart="startTouchWrapper"
+          @swipeLeft="$emit('setImage', 'next')"
+          @swipeRight="$emit('setImage', 'previous')"
         >
             <div class="absolute w-full h-full left-0 top-0">
                 <div ref="scrollContainer" class="bg-white overflow-x-hidden overflow-y-auto h-full w-full">
                     <div ref="scrollTo"></div>
                     <div
                         class="flex transition-400 will-change-transform"
-                        :class="swiping ? 'transition-none' : 'transition-transform'"
                         :style="`transform: translateX(${-wrapperOffset}px); width: ${100 * items.length}%; overflow-y:hidden; max-height: ${imageHeight}px`"
                     >
                       <template v-for="item in items">
@@ -65,16 +63,7 @@ export default {
       return {
         imageHeight: null,
         containerWidth: null,
-        isResizing: false,
         wrapperOffset: 0,
-        wrapperOffsetOrigin: null,
-        touchStart: null,
-        swipeLeft: null,
-        swipeRight: null,
-        swiping: null,
-        preloaded: false,
-        desktopLoaded: false,
-        mobileLoaded: false,
         resizeContainerTimeout: null
       }
     },
@@ -126,32 +115,6 @@ export default {
         const { offsetWidth, offsetHeight } = this.$refs.scrollContainer.querySelectorAll('img')[this.active];
         this.containerWidth = Math.floor(offsetWidth);
         this.imageHeight = Math.floor(offsetHeight);
-      },
-      startTouchWrapper(e){
-        if(this.$mq === 'xl'){
-          return;
-        }
-        
-        this.swiped = false;
-        this.swiping = true;
-        this.touchStart = e.touches[0].clientX;
-        
-        this.wrapperOffsetOrigin = this.wrapperOffset;
-        e.target.addEventListener('touchmove', this.moveWrapper);
-        e.target.addEventListener('touchend', this.endTouchWrapper);
-      },
-      moveWrapper(e){
-        const touchDistance = e.touches[0].clientX - this.touchStart;
-        this.wrapperOffset = this.wrapperOffsetOrigin - touchDistance;
-      },
-      endTouchWrapper(e){
-        this.swiping = false;
-        e.target.removeEventListener('touchmove', this.moveWrapper);
-        e.target.removeEventListener('touchend', this.endTouchWrapper);
-
-        if(!this.swiped){
-          this.wrapperOffset = this.wrapperOffsetOrigin;
-        }
       },
       setContainerWidth(){
         if(this.containerWidth === null){

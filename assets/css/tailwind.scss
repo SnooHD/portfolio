@@ -6,11 +6,16 @@
     box-sizing: border-box;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    
 }
 
+input,
+textarea,
 button,
-a,
-svg{
+svg,
+select,
+a {
+    -webkit-tap-highlight-color: transparent;
     outline: none;
 }
 

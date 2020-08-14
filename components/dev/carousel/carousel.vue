@@ -13,7 +13,7 @@
           :class="type === 'mobile' ? 'pb-1.777' : 'pb-.63'" 
           @swipeLeft="$emit('setImage', 'next'); swiped = true"
           @swipeRight="$emit('setImage', 'previous'); swiped = true"
-          @touchstart.prevent="startTouchWrapper"
+          @touchstart="startTouchWrapper"
         >
             <div class="absolute w-full h-full left-0 top-0">
                 <div ref="scrollContainer" class="bg-white overflow-x-hidden overflow-y-auto h-full w-full">

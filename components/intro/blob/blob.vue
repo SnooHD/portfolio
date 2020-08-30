@@ -8,40 +8,42 @@
 <path d="M306.806 172.623C231.568 130.526 244.422 16.2638 141.852 26.9107C-1.37835 41.7782 -2.87216 297.953 92.965 368.339C225.824 465.914 450.102 252.8 306.806 172.623Z" fill="url(#about_paint2_radial)"/>
 </mask>
 <g mask="url(#about_mask0)">
-<rect x="60" y="10" width="245" height="390" fill="url(#about_pattern0)"/>
+<rect x="60" y="10" width="245" height="390" :fill="getImageUrl('#about_pattern0')"/>
 </g>
 <g clip-path="url(#about_clip0)">
-<rect x="60" y="10" width="245" height="390" fill="url(#about_pattern1)"/>
+<rect x="60" y="10" width="245" height="390" :fill="getImageUrl('#about_pattern1')"/>
 </g>
 <defs>
-<pattern id="about_pattern0" width="1" height="1">
-<use xlink:href="#about_image0" transform="scale(.5, .5)"/>
-</pattern>
-<pattern id="about_pattern1" width="1" height="1">
-<use xlink:href="#about_image0" transform="scale(.5, .5)"/>
-</pattern>
-<linearGradient id="about_paint0_linear" x1="400" y1="347" x2="62.5852" y2="81.9101" gradientUnits="userSpaceOnUse">
-<stop stop-color="#2877B2" stop-opacity="0"/>
-<stop offset="1" stop-color="#2877B2"/>
-</linearGradient>
-<radialGradient id="about_paint1_radial" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(448.534 595.438) rotate(65.5948) scale(642.823 408.928)">
-<stop stop-color="#2969A5"/>
-<stop offset="0.5164" stop-color="#2967A3"/>
-<stop offset="0.7303" stop-color="#2A609D"/>
-<stop offset="0.8877" stop-color="#2A5491"/>
-<stop offset="1" stop-color="#2B4584"/>
-</radialGradient>
-<radialGradient id="about_paint2_radial" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(447.534 595.438) rotate(65.5948) scale(642.823 408.928)">
-<stop stop-color="#2969A5"/>
-<stop offset="0.5164" stop-color="#2967A3"/>
-<stop offset="0.7303" stop-color="#2A609D"/>
-<stop offset="0.8877" stop-color="#2A5491"/>
-<stop offset="1" stop-color="#2B4584"/>
-</radialGradient>
-<clipPath id="about_clip0">
-<rect width="257" height="326" fill="white" transform="translate(56.9979 7.9989)"/>
-</clipPath>
-<image v-if="image.src" id="about_image0" width="490" height="776" :xlink:href="image.src"></image>
+  <template v-if="image.src">
+    <pattern id="about_pattern0" width="1" height="1">
+      <use xlink:href="#about_image0" transform="scale(.5, .5)"/>
+    </pattern>
+    <pattern id="about_pattern1" width="1" height="1">
+      <use xlink:href="#about_image0" transform="scale(.5, .5)"/>
+    </pattern>
+    <image id="about_image0" width="490" height="776" :xlink:href="image.src"></image>
+  </template>
+  <linearGradient id="about_paint0_linear" x1="400" y1="347" x2="62.5852" y2="81.9101" gradientUnits="userSpaceOnUse">
+    <stop stop-color="#2877B2" stop-opacity="0"/>
+    <stop offset="1" stop-color="#2877B2"/>
+  </linearGradient>
+  <radialGradient id="about_paint1_radial" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(448.534 595.438) rotate(65.5948) scale(642.823 408.928)">
+    <stop stop-color="#2969A5"/>
+    <stop offset="0.5164" stop-color="#2967A3"/>
+    <stop offset="0.7303" stop-color="#2A609D"/>
+    <stop offset="0.8877" stop-color="#2A5491"/>
+    <stop offset="1" stop-color="#2B4584"/>
+  </radialGradient>
+  <radialGradient id="about_paint2_radial" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(447.534 595.438) rotate(65.5948) scale(642.823 408.928)">
+    <stop stop-color="#2969A5"/>
+    <stop offset="0.5164" stop-color="#2967A3"/>
+    <stop offset="0.7303" stop-color="#2A609D"/>
+    <stop offset="0.8877" stop-color="#2A5491"/>
+    <stop offset="1" stop-color="#2B4584"/>
+  </radialGradient>
+  <clipPath id="about_clip0">
+    <rect width="257" height="326" fill="white" transform="translate(56.9979 7.9989)"/>
+  </clipPath>
 </defs>
 </svg>
 
@@ -57,6 +59,11 @@ export default {
         png: '/images/about/mikedesnoo.png',
         webp: '/images/about/mikedesnoo.webp'
       }
+    }
+  },
+  methods: {
+    getImageUrl(img){
+      return `url(${location.protocol}//${location.host + location.pathname + img})`;
     }
   },
   async mounted(){

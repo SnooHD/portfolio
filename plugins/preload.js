@@ -10,6 +10,30 @@ class Preloader {
   font;
   fonts = [];
 
+  webP = null;
+
+  detectWebp(){
+    return new Promise((res) => {
+      // some small (2x1 px) test images for each feature
+      const base64 =  "data:image/webp;base64,UklGRjIAAABXRUJQVlA4ICYAAACyAgCdASoCAAEALmk0mk0iIiIiIgBoSygABc6zbAAA/v56QAAAAA==";
+
+      const image = document.createElement('img');
+      image.onload = () => {
+        if(image.width === 2 && image.height === 1) {
+          this.webP = true;
+        } else {
+          this.webP = false;
+        }
+        res();
+      }
+      image.onerror = () => {
+        this.webP = false;
+        res();
+      };
+      image.src = base64;
+    });
+  }
+
   fetchImage(src){
 
     return new Promise((res, rej) => {
@@ -23,10 +47,17 @@ class Preloader {
 
   async loadImage({ src, fallback }){
 
-    try{
+    console.log(src);
+
+    if(this.webP === null){
+      await this.detectWebp();
+    }
+
+    console.log(this.webP)
+
+    if(this.webp){
       await this.fetchImage(src);
-    }catch(e){
-      // lets try to get the fallback instead
+    }else{
       if(fallback){
         src = fallback;
 

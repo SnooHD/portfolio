@@ -37,7 +37,7 @@
                         'pb-dev-item h-75px'
                     ]"
                 >
-                    <div class="flex transition-opacity transition-400 items-center hover:opacity-100" :class="activeItem === index ? 'opacity-100' : 'opacity-60'">
+                    <div class="flex flex-shrink-0 transition-opacity transition-400 items-center hover:opacity-100" :class="activeItem === index ? 'opacity-100' : 'opacity-60'">
                         <icons :icon="item.icon" :class="item.color" class="flex justify-center"/>
                         <span :class="[
                             'pl-2 sm:pl-5',

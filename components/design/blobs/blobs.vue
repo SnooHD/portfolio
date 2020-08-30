@@ -1,6 +1,6 @@
 <template>
 <div>
-<svg width="100%" transform="scale(1.1)" viewBox="0 0 1264 991" fill="none" xmlns="http://www.w3.org/2000/svg">
+<svg width="100%" style="transform: scale(1.1);" viewBox="0 0 1264 991" fill="none" xmlns="http://www.w3.org/2000/svg">
 <g opacity="1" transform="translate(0, 0)">
 <path transform="translate(10, 0)" d="M244.456 181.84C180.847 -105.796 -38.2318 124.066 17.9194 265.851C74.0705 407.636 308.066 469.475 244.456 181.84Z" fill="url(#design_paint2_linear)" fill-opacity="1"/>
 <path d="M238.262 175.566C174.653 -112.069 -44.4256 117.793 11.7255 259.578C67.8767 401.363 301.872 463.202 238.262 175.566Z" fill="url(#design_paint1_linear)"/>

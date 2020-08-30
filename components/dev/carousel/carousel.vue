@@ -70,9 +70,6 @@ export default {
     async mounted(){
       await this.preload();
 
-      await this.$nextTick();
-      this.init();
-
       window.addEventListener('resize', this.setContainerWidth);
     },
     beforeDestroy(){
@@ -110,9 +107,13 @@ export default {
 
         this[`${this.type}Loaded`] = true;
         this.$emit('update:items', this.items);
+
+        await this.$nextTick();
+        this.init();
       },
       async init(){
         const { offsetWidth, offsetHeight } = this.$refs.scrollContainer.querySelectorAll('img')[this.active];
+        console.log(offsetWidth);
         this.containerWidth = Math.floor(offsetWidth);
         this.imageHeight = Math.floor(offsetHeight);
       },

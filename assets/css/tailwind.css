@@ -1,0 +1,130 @@
+@import "./fonts";
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+input,
+textarea,
+button,
+svg,
+select,
+a {
+    outline: none;
+}
+
+button {
+    font: inherit;
+}
+
+.before\:title-bg:before {
+    content: "";
+    width: calc(100% + 10px);
+    height: 35%;
+    left: -5px;
+    bottom: 5%;
+    transform: scale(0, 1);
+    transition: transform 0.4s ease;
+    @apply absolute;
+    @apply origin-left;
+    @apply bg-yellow-mid;
+}
+
+.s_in-view.before\:title-bg:before {
+    transform: scale(1, 1);
+}
+
+.before\:menu-item-bg:before {
+    content: "";
+    width: calc(100% + 10px);
+    height: 35%;
+    left: -5px;
+    bottom: 5%;
+    transform: scale(0, 1);
+    transition: transform 0.4s ease;
+    left: -4px;
+    width: calc(100% + 8px);
+    @apply absolute;
+    @apply origin-left;
+    @apply bg-yellow-mid;
+}
+
+.triangle {
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 10px;
+    border-top-color: transparent !important;
+    border-bottom-color: transparent !important;
+    border-left-color: #fff;
+    border-right-color: transparent !important;
+    border-right-width: 0 !important;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0px 1000px #ffffff inset !important;
+    -webkit-text-fill-color: #3c5768 !important;
+}
+
+button:focus,
+a:focus,
+svg:focus {
+    outline: none !important;
+}
+
+svg {
+    @apply overflow-visible;
+}
+
+#message::placeholder,
+#email::placeholder,
+#subject::placeholder {
+    @apply font-normal;
+    @apply text-gray;
+    @apply opacity-60;
+}
+
+@variants before,
+after {
+    .empty-content {
+        content: "";
+    }
+}
+
+.shake {
+    animation: shake 0.82s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+@keyframes shake {
+    10%,
+    90% {
+        transform: translateX(-1px);
+    }
+    20%,
+    80% {
+        transform: translateX(2px);
+    }
+    30%,
+    50%,
+    70% {
+        transform: translateX(-2px);
+    }
+    40%,
+    60% {
+        transform: translateX(1px);
+    }
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

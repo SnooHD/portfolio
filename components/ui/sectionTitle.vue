@@ -1,5 +1,6 @@
 <template>
-  <component :is="type"
+  <component
+    :is="type"
     scroll-animate
     class="
       text-blue-dark
@@ -9,17 +10,17 @@
       font-black
       relative
       before:title-bg
+      leading-[50px]
       in-view:before:scale-x-100
     "
   >
-    <span 
-        v-for="(char, index) in title"
-        :key="`title-${title}-char-${char}-${index}`"
-        :style="{
-            transitionDelay: `${(400 / title.length) * index}ms`
-        }"
-        
-        class="
+    <span
+      v-for="(char, index) in title"
+      :key="`title-${title}-char-${char}-${index}`"
+      :style="{
+        transitionDelay: `${(400 / title.length) * index}ms`
+      }"
+      class="
             relative z-10
             inline-block
             transition-transform
@@ -28,7 +29,7 @@
             in-view-child:-translate-y-.8
         "
     >
-        {{ char === ' ' ? '&nbsp;' : char }}
+      {{ char === " " ? "&nbsp;" : char }}
     </span>
   </component>
 </template>
@@ -42,8 +43,8 @@ export default {
     },
     type: {
       type: String,
-      default: 'h2'
+      default: "h2"
     }
   }
-}
+};
 </script>

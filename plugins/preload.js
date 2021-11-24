@@ -1,118 +1,106 @@
-import mime from 'mime-types';
-import FontFaceObserver from 'fontfaceobserver';
-import Vue from 'vue';
+import mime from "mime-types";
+import FontFaceObserver from "fontfaceobserver";
+import Vue from "vue";
 
 class Preloader {
-  
-  image;
-  images = [];
+    image;
+    images = [];
 
-  font;
-  fonts = [];
+    font;
+    fonts = [];
 
-  webP = null;
+    webP = null;
 
-  detectWebp(){
-    return new Promise((res) => {
-      // some small (2x1 px) test images for each feature
-      const base64 =  "data:image/webp;base64,UklGRjIAAABXRUJQVlA4ICYAAACyAgCdASoCAAEALmk0mk0iIiIiIgBoSygABc6zbAAA/v56QAAAAA==";
+    detectWebp() {
+        return new Promise(res => {
+            // some small (2x1 px) test images for each feature
+            const base64 =
+                "data:image/webp;base64,UklGRjIAAABXRUJQVlA4ICYAAACyAgCdASoCAAEALmk0mk0iIiIiIgBoSygABc6zbAAA/v56QAAAAA==";
 
-      const image = document.createElement('img');
-      image.onload = () => {
-        if(image.width === 2 && image.height === 1) {
-          this.webP = true;
+            const image = document.createElement("img");
+            image.onload = () => {
+                if (image.width === 2 && image.height === 1) {
+                    this.webP = true;
+                } else {
+                    this.webP = false;
+                }
+                res();
+            };
+            image.onerror = () => {
+                this.webP = false;
+                res();
+            };
+            image.src = base64;
+        });
+    }
+
+    fetchImage(src) {
+        return new Promise((res, rej) => {
+            const image = new Image();
+            image.onerror = rej;
+            image.onload = res;
+            image.src = src;
+        });
+    }
+
+    async loadImage({ src, fallback }) {
+        if (this.webP === null) {
+            await this.detectWebp();
+        }
+
+        if (this.webp) {
+            await this.fetchImage(src);
         } else {
-          this.webP = false;
+            if (fallback) {
+                src = fallback;
+
+                try {
+                    await this.fetchImage(src);
+                } catch (e) {
+                    throw "Both src and fallback can not be preloaded";
+                }
+            } else {
+                // unable to load fallback
+                throw "No preload fallback was provided";
+            }
         }
-        res();
-      }
-      image.onerror = () => {
-        this.webP = false;
-        res();
-      };
-      image.src = base64;
-    });
-  }
 
-  fetchImage(src){
+        const resourceType = mime.lookup(src);
+        const resource = { src, resourceType };
 
-    return new Promise((res, rej) => {
-      const image = new Image();
-      image.onerror = rej;
-      image.onload = res;
-      image.src = src;
-    });
+        // add resource to loaded list
+        Vue.set(this.images, this.images.length, resource);
 
-  }
-
-  async loadImage({ src, fallback }){
-
-    console.log(src);
-
-    if(this.webP === null){
-      await this.detectWebp();
+        this.image = resource;
+        // return the src and type
+        return resource;
     }
 
-    console.log(this.webP)
+    async loadFont({ name, weight, style }) {
+        const font = new FontFaceObserver(name, {
+            weight,
+            style
+        });
 
-    if(this.webp){
-      await this.fetchImage(src);
-    }else{
-      if(fallback){
-        src = fallback;
-
-        try{
-          await this.fetchImage(src);
-        }catch(e){
-          throw('Both src and fallback can not be preloaded');
+        try {
+            await font.load();
+        } catch (e) {
+            throw `Font ${name} ${weight} ${style} can not be preloaded`;
         }
-        
-      }else{
-        // unable to load fallback
-        throw('No preload fallback was provided');
-      }
+
+        const resource = { name, weight, style };
+
+        // add font to loaded list
+        Vue.set(this.fonts, this.fonts.length, resource);
+
+        this.font = resource;
+        return resource;
     }
-
-    const resourceType = mime.lookup(src);
-    const resource = { src, resourceType };
-
-    // add resource to loaded list
-    Vue.set(this.images, this.images.length, resource);
-
-    this.image = resource;
-    // return the src and type
-    return resource;
-
-  }
-
-  async loadFont({ name, weight, style }){
-
-    const font = new FontFaceObserver(name, {
-      weight,
-      style
-    });
-
-    try{
-      await font.load();
-    }catch(e){
-      throw(`Font ${name} ${weight} ${style} can not be preloaded`);
-    }
-
-    const resource = { name, weight, style };
-
-    // add font to loaded list
-    Vue.set(this.fonts, this.fonts.length, resource);
-    
-    this.font = resource;
-    return resource;
-
-  }
-
 }
 
 export default (context, inject) => {
-  const preload = new Preloader;
-  const injectable = Vue.observable(preload);
+    const preload = new Preloader();
+    const injectable = Vue.observable(preload);
 
-  inject('preload', injectable);
-}
+    inject("preload", injectable);
+};

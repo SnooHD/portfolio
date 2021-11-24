@@ -1,7 +1,5 @@
 <template>
-  <div 
-    class="relative"
-  >
+  <div class="relative">
     <header-block />
     <template v-for="(section, index) in sections">
       <component
@@ -23,12 +21,12 @@
 </template>
 
 <script>
-import 'intersection-observer';
-import headerBlock from '~/components/header/header.vue';
-import intro from '~/components/intro/intro.vue';
-import dev from '~/components/dev/dev.vue';
-import design from '~/components/design/design.vue';
-import contact from '~/components/contact/contact.vue';
+import "intersection-observer";
+import headerBlock from "~/components/header/header.vue";
+import intro from "~/components/intro/intro.vue";
+import dev from "~/components/dev/dev.vue";
+import design from "~/components/design/design.vue";
+import contact from "~/components/contact/contact.vue";
 
 export default {
   components: {
@@ -38,7 +36,7 @@ export default {
     design,
     contact
   },
-  data(){
+  data() {
     return {
       inViewOffset: 50,
       screenHeight: null,
@@ -46,45 +44,53 @@ export default {
       animating: false,
       loaded: false,
       fontsLoaded: true,
-      sections: [
-        'intro',
-        'dev',
-        'design',
-        'contact'
-      ],
+      sections: ["intro", "dev", "design", "contact"],
       headerImages: [],
-      introImages: [{
-        src: '/images/about/mikedesnoo.png',
-        fallback: '/images/about/mikedesnoo.webp'
-      }],
-      devImages: [{
-        src: 'nativeway.webp',
-        fallback: 'nativeway.jpg',
-      },{
-        src: 'quality-connection.webp',
-        fallback: 'quality-connection.jpg',
-      },{
-        src: 'track-and-trace.webp',
-        fallback: 'track-and-trace.jpg',
-      }],
-      designImages: [{
-        src: '/images/design/logopicker-thumb.webp',
-        fallback: '/images/design/logopicker-thumb.png',
-      },{
-        src: '/images/design/adoption-support-alliance-thumb.webp',
-        fallback: '/images/design/adoption-support-alliance-thumb.png',
-      },{
-        src: '/images/design/influence-thumb.webp',
-        fallback: '/images/design/influence-thumb.png',
-      },{
-        src: '/images/design/powrful-thumb.webp',
-        fallback: '/images/design/powrful-thumb.png',
-      }],
+      introImages: [
+        {
+          src: "/images/about/mikedesnoo.png",
+          fallback: "/images/about/mikedesnoo.webp"
+        }
+      ],
+      devImages: [
+        {
+          src: "nativeway.webp",
+          fallback: "nativeway.jpg"
+        },
+        {
+          src: "quality-connection.webp",
+          fallback: "quality-connection.jpg"
+        },
+        {
+          src: "track-and-trace.webp",
+          fallback: "track-and-trace.jpg"
+        }
+      ],
+      designImages: [
+        {
+          src: "/images/design/logopicker-thumb.webp",
+          fallback: "/images/design/logopicker-thumb.jpeg"
+        },
+        {
+          src: "/images/design/adoption-support-alliance-thumb.webp",
+          fallback: "/images/design/adoption-support-alliance-thumb.jpeg"
+        },
+        {
+          src: "/images/design/influence-thumb.webp",
+          fallback: "/images/design/influence-thumb.jpeg"
+        },
+        {
+          src: "/images/design/powrful-thumb.webp",
+          fallback: "/images/design/powrful-thumb.jpeg"
+        }
+      ],
       contactImages: []
-    }
+    };
   },
-  async mounted(){
-    if(this.$route.hash){
+  async mounted() {
+    await this.$nextTick();
+
+    if (this.$route.hash) {
       // using 0 for duration takes the default given in nuxt.config.js..
       // so using 1 instead.
       this.$scrollTo(this.$route.hash, 1);
@@ -97,45 +103,43 @@ export default {
     this.init();
   },
   methods: {
-    async preloadFonts(){
+    async preloadFonts() {
       const weights = [900, 700, 500];
 
-      for(let i=0; i<weights.length; i++){
+      for (let i = 0; i < weights.length; i++) {
         const weight = weights[i];
         const font = {
-          name: 'GalanoGrotesque',
-          style: 'normal',
+          name: "GalanoGrotesque",
+          style: "normal",
           weight
-        }
+        };
 
-        await this.$preload.loadFont(font)
+        await this.$preload.loadFont(font);
       }
 
       this.fontsLoaded = true;
 
-      return
+      return;
     },
-    init(){
+    init() {
       this.initScroll();
     },
-    initScroll(){
+    initScroll() {
       this.screenHeight = window.innerHeight;
-      
+
       const components = this.$refs.section.map(component => component.$el);
-      const animate = Array.from(document.querySelectorAll('[scroll-animate]'));
+      const animate = Array.from(document.querySelectorAll("[scroll-animate]"));
 
       const elements = components.concat(animate);
       elements.forEach((element, index) => {
-
         const observer = new IntersectionObserver(this.isInView, {
           threshold: [0, 1],
-          rootMargin: '0px 0px 0px 0px'
+          rootMargin: "0px 0px 0px 0px"
         });
         observer.observe(element);
-
       });
     },
-    isInView(entries, observer){
+    isInView(entries, observer) {
       entries.forEach((entry, index) => {
         let currentY = entry.boundingClientRect.y;
         let currentRatio = entry.intersectionRatio;
@@ -160,44 +164,54 @@ export default {
           }
         }
 
-        if(inView){
-          element.classList.add('s_in-view');
-        }else if(currentRatio === 0){
+        if (inView) {
+          element.classList.add("s_in-view");
+        } else if (currentRatio === 0) {
           // only remove for scroll-animate elements
-          if(element.hasAttribute('scroll-animate')){
-            element.classList.remove('s_in-view');
+          if (element.hasAttribute("scroll-animate")) {
+            element.classList.remove("s_in-view");
           }
         }
-
-      })
-    },
-  },
-  head(){
-    return {
-      title: 'Snoo - Portfolio',
-      meta: [{
-        name: 'keywords',
-        content: 'Personal, Portfolio, Creative, Design, Development, Nuxt, Vue, CSS, CSS3, HTML, HTML5, JS, Javascript, TS, Typescript'
-      },{
-        name: 'description',
-        content: 'Hello! My name is Mike de Snoo, but you can call me Snoo. I am a graphic designer & developer from The Netherlands.'
-      },{
-        name: 'og:description',
-        content: 'Hello! My name is Mike de Snoo, but you can call me Snoo. I am a graphic designer & developer from The Netherlands.'
-      },{
-        property: 'og:image',
-        content: 'https://portfolio.logopicker.com/images/snoo.png'
-      },{
-        property: 'og:url',
-        content: 'https://portfolio.logopicker.com/'
-      },{
-        property: 'og:title',
-        content: 'Snoo - Portfolio'
-      },{
-        property: 'og:type',
-        content: 'website'
-      }]
+      });
     }
+  },
+  head() {
+    return {
+      title: "Snoo - Portfolio",
+      meta: [
+        {
+          name: "keywords",
+          content:
+            "Personal, Portfolio, Creative, Design, Development, Nuxt, Vue, CSS, CSS3, HTML, HTML5, JS, Javascript, TS, Typescript"
+        },
+        {
+          name: "description",
+          content:
+            "Hello! My name is Mike de Snoo, but you can call me Snoo. I am a graphic designer & developer."
+        },
+        {
+          name: "og:description",
+          content:
+            "Hello! My name is Mike de Snoo, but you can call me Snoo. I am a graphic designer & developer."
+        },
+        {
+          property: "og:image",
+          content: "https://portfolio.logopicker.com/images/snoo.png"
+        },
+        {
+          property: "og:url",
+          content: "https://portfolio.logopicker.com/"
+        },
+        {
+          property: "og:title",
+          content: "Snoo - Portfolio"
+        },
+        {
+          property: "og:type",
+          content: "website"
+        }
+      ]
+    };
   }
-}
+};
 </script>

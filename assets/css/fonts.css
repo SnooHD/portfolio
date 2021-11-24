@@ -1,0 +1,49 @@
+@font-face {
+    font-family: 'GalanoGrotesque';
+    src: url('/fonts/galanogrotesque-regular.woff2') format('woff2'),
+        url('/fonts/galanogrotesque-regular.woff') format('woff'),
+        url('/fonts/galanogrotesque-regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'GalanoGrotesque';
+    src: url('/fonts/galanogrotesque-medium.woff2') format('woff2'),
+        url('/fonts/galanogrotesque-medium.woff') format('woff'),
+        url('/fonts/galanogrotesque-medium.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'GalanoGrotesque';
+    src: url('/fonts/galanogrotesque-semibold.woff2') format('woff2'),
+        url('/fonts/galanogrotesque-semibold.woff') format('woff'),
+        url('/fonts/galanogrotesque-semibold.ttf') format('truetype');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'GalanoGrotesque';
+    src: url('/fonts/galanogrotesque-bold.woff2') format('woff2'),
+        url('/fonts/galanogrotesque-bold.woff') format('woff'),
+        url('/fonts/galanogrotesque-bold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'GalanoGrotesque';
+    src: url('/fonts/galanogrotesque-black.woff2') format('woff2'),
+        url('/fonts/galanogrotesque-black.woff') format('woff'),
+        url('/fonts/galanogrotesque-black.ttf') format('truetype');
+    font-weight: 900;
+    font-style: normal;
+    font-display: swap;
+}

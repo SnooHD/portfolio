@@ -8,6 +8,12 @@
     -moz-osx-font-smoothing: grayscale;
 }
 
+html {
+    min-height: 100vh;
+    width: 100%;
+    overflow-y: scroll;
+}
+
 input,
 textarea,
 button,
@@ -123,6 +129,41 @@ after {
     60% {
         transform: translateX(1px);
     }
+}
+
+@keyframes bouncingRectangle {
+    17% {
+        border-bottom-right-radius: 3px;
+    }
+    25% {
+        transform: translateY(9px) rotate(22.5deg);
+    }
+    50% {
+        transform: translateY(18px) scale(1, 0.9) rotate(45deg);
+        border-bottom-right-radius: 40px;
+    }
+    75% {
+        transform: translateY(9px) rotate(67.5deg);
+    }
+    100% {
+        transform: translateY(0) rotate(90deg);
+    }
+}
+
+@keyframes bounceShadow {
+    50% {
+        transform: scale(1.2, 1);
+    }
+}
+
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity 0.5s;
+}
+
+.fade-enter,
+.fade-leave-to {
+    opacity: 0;
 }
 
 @tailwind base;

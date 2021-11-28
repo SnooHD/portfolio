@@ -1,5 +1,6 @@
 <template>
-  <div class="
+  <div
+    class="
     lg:px-14
     md:px-12 
     sm:px-10
@@ -9,7 +10,8 @@
     text-gray-blue
     mds_layout
     bg-light
-  ">
+  "
+  >
     <nuxt
       class="
         pb-4

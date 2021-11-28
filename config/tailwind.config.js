@@ -148,6 +148,10 @@ module.exports = {
                 galano: ["GalanoGrotesque", "sans-serif"]
             },
             extend: {
+                animation: {
+                    bounceRectangle: "bouncingRectangle .5s linear infinite",
+                    bounceShadow: "shadow .5s linear infinite"
+                },
                 fontSize: {
                     tiny: "0.75rem",
                     "1xl": "1.3rem",

@@ -1,5 +1,8 @@
 <template>
-  <div class="flex flex-col justify-center items-center" v-if="param">
+  <div
+    class="flex flex-col justify-center items-center min-h-[100vh] pb-[100px] sm:pb-[140px]"
+    v-if="param"
+  >
     <div
       v-if="design"
       ref="text"
@@ -20,7 +23,7 @@
       ></div>
     </div>
     <div
-      class="w-full mt-4 relative z-10 rounded-md overflow-hidden"
+      class="w-full mt-4 relative z-10 rounded-md overflow-hidden flex flex-grow"
       :style="{
         transform: `scale(${scale})`,
         transformOrigin: 'top center',
@@ -28,22 +31,50 @@
           '0'})`
       }"
     >
-      <picture>
-        <source
-          v-for="src in ['jpeg', 'webp']"
-          :key="`design-image-${index}-src-${src}`"
-          class="w-full"
-          :srcset="`/images/design/${param}-full.${src}`"
-          :type="src === 'webp' ? 'image/webp' : 'image/jpeg'"
-        />
-        <img class="w-full" :src="`/images/design/${param}-full.jpeg`" />
-      </picture>
+      <div
+        :class="[
+          'absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]',
+          imageHeight ? 'hidden' : ''
+        ]"
+      >
+        <div
+          :class="[
+            'w-[50px] h-[50px] bg-blue-mid rounded-[3px]',
+            imageHeight ? null : 'animate-bounceRectangle'
+          ]"
+        ></div>
+        <div
+          :class="[
+            'w-[50px] h-[5px] bg-darker opacity-[0.1] translate-y-[12px] rounded-[50%]',
+            imageHeight ? null : 'animate-bounceShadow'
+          ]"
+        ></div>
+      </div>
+      <div
+        :class="[
+          'transition-all duration-400',
+          imageHeight ? 'opacity-1' : 'opacity-0'
+        ]"
+        :style="{ height: `${imageHeight}px` }"
+        ref="image"
+      >
+        <picture>
+          <source
+            v-for="src in ['jpeg', 'webp']"
+            :key="`design-image-src-${src}`"
+            class="w-full"
+            :srcset="`/images/design/${param}-full.${src}`"
+            :type="src === 'webp' ? 'image/webp' : 'image/jpeg'"
+          />
+          <img class="w-full" :src="`/images/design/${param}-full.jpeg`" />
+        </picture>
+      </div>
     </div>
     <div
       class="fixed flex bottom-0 z-20 flex-row w-full content-between justify-between sm:px-12 sm:py-12 py-8 px-4"
     >
       <div>
-        <NuxtLink to="../#design">
+        <NuxtLink to="/#design">
           <button
             class="
                     relative rounded-full bg-dark text-white font-semibold py-3 px-4
@@ -69,7 +100,7 @@
         </NuxtLink>
       </div>
       <div>
-        <NuxtLink to="../#contact">
+        <NuxtLink to="/#contact">
           <button
             class="
                     rounded-full bg-blue-mid text-white font-semibold py-3 px-4
@@ -90,10 +121,25 @@
 
 <script>
 import sectionTitle from "~/components/ui/sectionTitle";
+
 export default {
   layout: "showcase",
   components: {
     sectionTitle
+  },
+  beforeRouteEnter(to, from, next) {
+    const routes = [
+      "logopicker",
+      "powrful",
+      "influence",
+      "adoption-support-alliance"
+    ];
+
+    if (routes.includes(to.params.design)) {
+      next();
+    } else {
+      next("/404");
+    }
   },
   created() {
     this.design = this.designs[this.param];
@@ -116,9 +162,13 @@ export default {
       this.shadowTop = this.fullShadowTop;
       this.alpha = this.fullAlpha;
     }
+
+    this.loadImage();
   },
   beforeDestroy() {
     document.removeEventListener("scroll", this.scrolling);
+    window.removeEventListener("resize", this.setImageHeight);
+    clearTimeout(this.imageTimeout);
   },
   data() {
     return {
@@ -132,55 +182,55 @@ export default {
         logopicker: {
           title: "LogoPicker",
           content: `
-                        LogoPicker is a logo maker that generates custom logo designs. This tool makes design accessible to everyone.
-                        By asking a few questions to the user, we can interpret the answers to provide accurate design ideas.
-                        The goal is to empower everyone to embark on a creative journey, without knowledge of advanced graphic editors.
-                        Its user friendly UI can be mastered within minutes.<br/>
-                        <br/>
-                        This is a personal project, which is still ongoing.
-                        The frontend design has not been developed yet, but a lot of work was done for the admin interface.
-                    `
+        LogoPicker is a logo maker that generates custom logo designs. This tool makes design accessible to everyone.
+        By asking a few questions to the user, we can interpret the answers to provide accurate design ideas.
+        The goal is to empower everyone to embark on a creative journey, without knowledge of advanced graphic editors.
+        Its user friendly UI can be mastered within minutes.<br/>
+        <br/>
+        This is a personal project, which is still ongoing.
+        The frontend design has not been developed yet, but a lot of work was done for the admin interface.
+    `
         },
         "adoption-support-alliance": {
           title: "ASA",
           content: `
-                        ASA (Adoption Support Alliance) helps adoptive parents through the unique challenges of creating a new family.
-                        The logo designed for this charity is an abstract representation of a family hug (top view).<br/>
-                        <br/>
-                        The colors used represent the sunrise:<br/>
-                        <b class="font-semibold">Blue</b> → Trust, virtue and willpower.<br/>
-                        <b class="font-semibold">Yellow</b> → The end of solitary darkness. It's thriving, bright and energetic.<br/>
-                        <b class="font-semibold">Green</b> → Our common roots: earth / nature the home we all share..<br/>
-                        <br/>
-                        I used circular shapes to convey a sense of unity and wholeness.
-                        A layer of protection without a beginning or end.
-                    `
+        ASA (Adoption Support Alliance) helps adoptive parents through the unique challenges of creating a new family.
+        The logo designed for this charity is an abstract representation of a family hug (top view).<br/>
+        <br/>
+        The colors used represent the sunrise:<br/>
+        <b class="font-semibold">Blue</b> → Trust, virtue and willpower.<br/>
+        <b class="font-semibold">Yellow</b> → The end of solitary darkness. It's thriving, bright and energetic.<br/>
+        <b class="font-semibold">Green</b> → Our common roots: earth / nature the home we all share..<br/>
+        <br/>
+        I used circular shapes to convey a sense of unity and wholeness.
+        A layer of protection without a beginning or end.
+    `
         },
         powrful: {
           title: "Powrful",
           content: `
-                        Powrful is a social media marketing agency that was looking for a mascot.<br class="hidden lg:block"/>
-                        Meet Phillip, a mighty T-Rex <b class="font-semibold">Raawwrrg</b> that has everything he could every wish for.
-                        Although he has tiny hands and can't reach very far, he has a powerful magnet which allows him to draw everything from everywhere.
-                        This makes him very happy.
-                    `
+        Powrful is a social media marketing agency that was looking for a mascot.<br class="hidden lg:block"/>
+        Meet Phillip, a mighty T-Rex <b class="font-semibold">Raawwrrg</b> that has everything he could every wish for.
+        Although he has tiny hands and can't reach very far, he has a powerful magnet which allows him to draw everything from everywhere.
+        This makes him very happy.
+    `
         },
         influence: {
           title: "Influence",
           content: `
-                        A modern logo for a social media network of influencers.<br class="hidden lg:block"/>
-                        The symbol represents the flow of influence between users.
-                        The continuity of the colors serves to represent the current of information, gracefully running like a river from one user to the other. 
-                        <br/><br/>
-                        I used circles based on the <b class="font-semibold">Golden Ratio</b> to structure the design as it denotes a strong message for this brand:
-                        <ul class="flex flex-wrap list-disc list-inside mt-4">
-                            <li class="w-full xs:w-.5 md:w-1/3 font-medium">Inclusiveness</li>
-                            <li class="w-full xs:w-.5 md:w-1/3 font-medium">Interaction</li>
-                            <li class="w-full xs:w-.5 md:w-1/3 font-medium">Social circles</li>
-                            <li class="w-full xs:w-.5 md:w-1/3 font-medium">Globality</li>
-                            <li class="w-full xs:w-.5 md:w-1/3 font-medium">Growth</li>
-                        </ul>
-                    `
+        A modern logo for a social media network of influencers.<br class="hidden lg:block"/>
+        The symbol represents the flow of influence between users.
+        The continuity of the colors serves to represent the current of information, gracefully running like a river from one user to the other.
+        <br/><br/>
+        I used circles based on the <b class="font-semibold">Golden Ratio</b> to structure the design as it denotes a strong message for this brand:
+        <ul class="flex flex-wrap list-disc list-inside mt-4">
+            <li class="w-full xs:w-.5 md:w-1/3 font-medium">Inclusiveness</li>
+            <li class="w-full xs:w-.5 md:w-1/3 font-medium">Interaction</li>
+            <li class="w-full xs:w-.5 md:w-1/3 font-medium">Social circles</li>
+            <li class="w-full xs:w-.5 md:w-1/3 font-medium">Globality</li>
+            <li class="w-full xs:w-.5 md:w-1/3 font-medium">Growth</li>
+        </ul>
+    `
         }
       },
       originalScale: 0.9,
@@ -195,10 +245,34 @@ export default {
       originalShadowTop: 25,
       shadowTop: 25,
       fullShadowTop: 5,
-      animating: false
+      animating: false,
+      imageTimeout: 0,
+      imageHeight: 0
     };
   },
   methods: {
+    setImageHeight() {
+      const { height } = this.$refs.image
+        .querySelector("picture")
+        .getBoundingClientRect();
+
+      const scaledHeight =
+        (height / (this.scale * 100)) * (this.fullScale * 100);
+
+      this.imageHeight = scaledHeight;
+    },
+    loadImage: async function() {
+      const src = `/images/design/${this.param}-full.webp`;
+      const fallback = `/images/design/${this.param}-full.jpeg`;
+      await this.$preload.loadImage({ src, fallback });
+
+      await this.$nextTick();
+      // let the bouncer bounce =)
+      this.imageTimeout = setTimeout(() => {
+        this.setImageHeight();
+        window.addEventListener("resize", this.setImageHeight);
+      }, 1000);
+    },
     scrolling(e) {
       if (scrollY > this.textHeight) {
         this.scale = this.fullScale;
@@ -235,7 +309,7 @@ export default {
   },
   computed: {
     param() {
-      return this.$route.params.design.toLowerCase();
+      return this.$route.params.design?.toLowerCase();
     },
     paramUpperCase() {
       const { param } = this;

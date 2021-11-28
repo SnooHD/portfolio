@@ -1,5 +1,8 @@
 <template>
-  <div class="flex flex-col justify-center items-center" v-if="param">
+  <div
+    class="flex flex-col justify-center items-center min-h-[100vh] pb-[100px] sm:pb-[140px]"
+    v-if="param"
+  >
     <div
       v-if="dev"
       ref="text"
@@ -20,7 +23,7 @@
       ></div>
     </div>
     <div
-      class="w-full mt-4 relative z-10 rounded-md overflow-hidden"
+      class="w-full mt-4 relative z-10 rounded-md overflow-hidden flex-grow flex"
       :style="{
         transform: `scale(${scale})`,
         transformOrigin: 'top center',
@@ -28,22 +31,50 @@
           '0'})`
       }"
     >
-      <picture>
-        <source
-          v-for="src in ['jpeg', 'webp']"
-          :key="`dev-image-${index}-src-${src}`"
-          class="w-full"
-          :srcset="`/images/dev/${param}-full.${src}`"
-          :type="src === 'webp' ? 'image/webp' : 'image/jpeg'"
-        />
-        <img class="w-full" :src="`/images/dev/${param}-full.jpeg`" />
-      </picture>
+      <div
+        :class="[
+          'absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]',
+          imageHeight ? 'hidden' : ''
+        ]"
+      >
+        <div
+          :class="[
+            'w-[50px] h-[50px] bg-blue-mid rounded-[3px]',
+            imageHeight ? null : 'animate-bounceRectangle'
+          ]"
+        ></div>
+        <div
+          :class="[
+            'w-[50px] h-[5px] bg-darker opacity-[0.1] translate-y-[12px] rounded-[50%]',
+            imageHeight ? null : 'animate-bounceShadow'
+          ]"
+        ></div>
+      </div>
+      <div
+        :class="[
+          'transition-all duration-400',
+          imageHeight ? 'opacity-1' : 'opacity-0'
+        ]"
+        :style="{ height: `${imageHeight}px` }"
+        ref="image"
+      >
+        <picture>
+          <source
+            v-for="src in ['jpeg', 'webp']"
+            :key="`dev-image-src-${src}`"
+            class="w-full"
+            :srcset="`/images/dev/${param}-full.${src}`"
+            :type="src === 'webp' ? 'image/webp' : 'image/jpeg'"
+          />
+          <img class="w-full" :src="`/images/dev/${param}-full.jpeg`" />
+        </picture>
+      </div>
     </div>
     <div
       class="fixed flex bottom-0 z-20 flex-row w-full content-between justify-between sm:px-12 sm:py-12 py-8 px-4"
     >
       <div>
-        <NuxtLink to="../#dev">
+        <NuxtLink to="/#dev">
           <button
             class="
                     relative rounded-full bg-dark text-white font-semibold py-3 px-4
@@ -69,7 +100,7 @@
         </NuxtLink>
       </div>
       <div>
-        <NuxtLink to="../#contact">
+        <NuxtLink to="/#contact">
           <button
             class="
                     rounded-full bg-blue-mid text-white font-semibold py-3 px-4
@@ -95,18 +126,25 @@ export default {
   components: {
     sectionTitle
   },
+  beforeRouteEnter(to, from, next) {
+    const routes = ["basic-fit"];
+
+    if (routes.includes(to.params.dev)) {
+      next();
+    } else {
+      next("/404");
+    }
+  },
   created() {
-    console.log(this.param);
+    if (!this.development[this.param]) {
+      this.$router.push({ path: "/404" });
+      return;
+    }
     this.dev = this.development[this.param];
   },
   async mounted() {
     await this.$nextTick();
     this.isMounted = true;
-
-    if (this.param === "logopicker") {
-      this.alpha = 0.35;
-      this.originalAlpha = 0.35;
-    }
 
     this.textHeight = this.$refs.text.getBoundingClientRect().height;
     document.addEventListener("scroll", this.scrolling);
@@ -117,14 +155,20 @@ export default {
       this.shadowTop = this.fullShadowTop;
       this.alpha = this.fullAlpha;
     }
+
+    this.loadImage();
   },
   beforeDestroy() {
     document.removeEventListener("scroll", this.scrolling);
+    window.removeEventListener("resize", this.setImageHeight);
+    clearTimeout(this.imageTimeout);
   },
   data() {
     return {
       textHeight: null,
       isMounted: false,
+      loading: true,
+      imageHeight: 0,
       dev: {
         title: null,
         content: null
@@ -153,10 +197,32 @@ export default {
       originalShadowTop: 25,
       shadowTop: 25,
       fullShadowTop: 5,
-      animating: false
+      animating: false,
+      imageTimeout: 0
     };
   },
   methods: {
+    setImageHeight() {
+      const { height } = this.$refs.image
+        .querySelector("picture")
+        .getBoundingClientRect();
+
+      const scaledHeight =
+        (height / (this.scale * 100)) * (this.fullScale * 100);
+
+      this.imageHeight = scaledHeight;
+    },
+    loadImage: async function() {
+      const src = `/images/dev/${this.param}-full.webp`;
+      const fallback = `/images/dev/${this.param}-full.jpeg`;
+      await this.$preload.loadImage({ src, fallback });
+
+      await this.$nextTick();
+      // let the bouncer bounce =)
+      this.imageTimeout = setTimeout(() => {
+        this.setImageHeight();
+      }, 1000);
+    },
     scrolling(e) {
       if (scrollY > this.textHeight) {
         this.scale = this.fullScale;

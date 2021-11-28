@@ -123,10 +123,23 @@
           </i>
         </div>
 
-        <nuxtLink
-          v-if="items[activeItem].buttonText === 'Showcase'"
-          :to="items[activeItem].url"
+        <Component
+          :is="items[activeItem].buttonText === 'Showcase' ? 'NuxtLink' : 'a'"
+          :to="
+            items[activeItem].buttonText === 'Showcase'
+              ? items[activeItem].url
+              : null
+          "
+          :target="
+            items[activeItem].buttonText !== 'Showcase' ? '_blank' : null
+          "
+          :href="
+            items[activeItem].buttonText !== 'Showcase'
+              ? items[activeItem].url
+              : null
+          "
           class="
+                cursor-pointer
                 lg:transition-color lg:hover:text-yellow-mid lg:hover:bg-none
                 transition-bg hover:bg-yellow-dark transition-400
                 shadow-md active:shadow lg:shadow-none
@@ -144,31 +157,7 @@
           <span class="font-semibold text-shadow-md">{{
             items[activeItem].buttonText
           }}</span>
-        </nuxtLink>
-
-        <a
-          v-else
-          target="_blank"
-          :href="items[activeItem].url"
-          class="
-                lg:transition-color lg:hover:text-yellow-mid lg:hover:bg-none
-                transition-bg hover:bg-yellow-dark transition-400
-                shadow-md active:shadow lg:shadow-none
-                rounded-full lg:rounded-none bg-yellow-mid lg:bg-none px-6 lg:px-0 py-2 lg:py-0
-                absolute text-xl justify-center right-0 z-10 top-full
-                text-white transition-400 flex space-x-3 right-.5 translate-link-center lg:mt-.03 xl:mt-6 lg:right-.09 lg:translate-none
-            "
-        >
-          <icons
-            icon="link"
-            :color="true"
-            :size="21"
-            class="flex justify-center items-center text-white lg:text-yellow-mid"
-          />
-          <span class="font-semibold text-shadow-md">{{
-            items[activeItem].buttonText
-          }}</span>
-        </a>
+        </Component>
       </div>
     </div>
   </section>

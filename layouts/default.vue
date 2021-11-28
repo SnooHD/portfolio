@@ -1,5 +1,6 @@
 <template>
-  <div class="
+  <div
+    class="
     overflow-hidden
     lg:px-14
     md:px-12 
@@ -10,13 +11,14 @@
     text-gray-blue
     mds_layout
     bg-light
-  ">
+  "
+  >
     <!--
       $mq creates jump content due to the default breakpoint used from SSR
       We don't need SSR anyways as this protoflio will be used for static rendering
      -->
     <client-only>
-      <nuxt 
+      <nuxt
         style="margin: 0 auto;"
         class="
           py-4

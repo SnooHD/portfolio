@@ -73,8 +73,18 @@ module.exports = {
             "/design/logopicker",
             "/design/powrful",
             "/design/influence",
-            "/design/adoption-support-alliance"
+            "/design/adoption-support-alliance",
+            "/dev/basic-fit"
         ]
+    },
+    router: {
+        extendRoutes(routes, resolve) {
+            routes.push({
+                name: "not-found",
+                path: "*",
+                component: resolve(__dirname, "pages/404.vue")
+            });
+        }
     },
     /*
      ** Build configuration

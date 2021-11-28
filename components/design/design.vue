@@ -55,7 +55,7 @@
               <picture>
                 <source
                   v-for="src in [image.src, image.fallback]"
-                  :key="`design-image-${index}-src-${src}`"
+                  :key="`design-image-src-${src}`"
                   class="rounded-lg w-full"
                   :class="[
                     'cursor-pointer transition-shadow transition-400',

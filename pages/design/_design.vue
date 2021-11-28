@@ -364,11 +364,11 @@ export default {
         },
         {
           property: "og:image",
-          content: `https://portfolio.logopicker.com/images/${this.param}-thumb.jpg`
+          content: `https://mikedesnoo.com/images/design/${this.param}-thumb.jpeg`
         },
         {
           property: "og:url",
-          content: `https://portfolio.logopicker.com/design/${this.param}`
+          content: `https://mikedesnoo.com/design/${this.param}`
         },
         {
           property: "og:title",

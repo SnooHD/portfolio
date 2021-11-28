@@ -1,11 +1,11 @@
 # My portfolio
 
 > Build with [Nuxt.js](https://github.com/nuxt/nuxt.js)  
-> Have a look here: [https://portfolio.logopicker.com/](https://portfolio.logopicker.com/)
+> Have a look here: [https://mikedesnoo.com/](https://mikedesnoo.com/)
 
 ## Build Setup
 
-``` bash
+```bash
 # install dependencies
 $ npm install
 

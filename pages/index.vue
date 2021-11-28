@@ -196,11 +196,11 @@ export default {
         },
         {
           property: "og:image",
-          content: "https://portfolio.logopicker.com/images/snoo.png"
+          content: "https://mikedesnoo.com/images/avatar.jpg"
         },
         {
           property: "og:url",
-          content: "https://portfolio.logopicker.com/"
+          content: "https://mikedesnoo.com"
         },
         {
           property: "og:title",

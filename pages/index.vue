@@ -1,12 +1,17 @@
 <template>
-  <div class="relative">
-    <header-block />
-    <template v-for="(section, index) in sections">
-      <component
-        ref="section"
-        :is="section"
-        :key="`portfolio-section-${index}`"
-        class="
+  <!--
+      $mq creates jump content due to the default breakpoint used from SSR
+      We don't need SSR anyways as this portfolio will be used for static rendering
+     -->
+  <client-only>
+    <div class="relative">
+      <header-block />
+      <template v-for="(section, index) in sections">
+        <component
+          ref="section"
+          :is="section"
+          :key="`portfolio-section-${index}`"
+          class="
           transition-all
           will-change-transform
           transition-400
@@ -15,9 +20,10 @@
           in-view:opacity-100
           in-view:translate-none
         "
-      />
-    </template>
-  </div>
+        />
+      </template>
+    </div>
+  </client-only>
 </template>
 
 <script>
@@ -180,33 +186,40 @@ export default {
       title: "Snoo - Portfolio",
       meta: [
         {
+          hid: "keywords",
           name: "keywords",
           content:
             "Personal, Portfolio, Creative, Design, Development, Nuxt, Vue, CSS, CSS3, HTML, HTML5, JS, Javascript, TS, Typescript"
         },
         {
+          hid: "description",
           name: "description",
           content:
             "Hello! My name is Mike de Snoo, but you can call me Snoo. I am a graphic designer & developer."
         },
         {
+          hid: "og:description",
           name: "og:description",
           content:
             "Hello! My name is Mike de Snoo, but you can call me Snoo. I am a graphic designer & developer."
         },
         {
+          hid: "og:image",
           property: "og:image",
           content: "https://mikedesnoo.com/images/about/avatar.jpg"
         },
         {
+          hid: "og:url",
           property: "og:url",
           content: "https://mikedesnoo.com"
         },
         {
+          hid: "og:title",
           property: "og:title",
           content: "Snoo - Portfolio"
         },
         {
+          hid: "og:type",
           property: "og:type",
           content: "website"
         }

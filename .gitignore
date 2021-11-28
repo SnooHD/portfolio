@@ -7,4 +7,5 @@ node_modules
 # Nuxt generate
 dist
 
+# macOS Files
 .DS_Store

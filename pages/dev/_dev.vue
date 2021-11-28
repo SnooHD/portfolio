@@ -1,26 +1,34 @@
 <template>
   <div
-    class="flex flex-col justify-center items-center min-h-[100vh] pb-[100px] sm:pb-[140px]"
     v-if="param"
+    class="px-[10px] flex flex-col justify-center items-center min-h-[100vh] pb-[100px] sm:pb-[140px]"
   >
     <div
       v-if="dev"
-      ref="text"
-      class="
+      class="lg:px-14
+        md:px-12 
+        sm:px-10
+        xs:px-8
+        px-6"
+    >
+      <div
+        ref="text"
+        class="
             flex flex-col justify-center items-center sticky top-0 z-0 container md:max-w-2xl lg:max-w-4xl
             lg:px-14 md:px-12 px-6
             py-4 sm:py-6 md:py-10 w-full
         "
-    >
-      <sectionTitle
-        type="h1"
-        :class="{ 's_in-view': isMounted }"
-        :title="dev.title"
-      />
-      <div
-        class="mt-4 md:mt-6 lg:mt-8 font-normal text-lg leading-wider"
-        v-html="dev.content"
-      ></div>
+      >
+        <sectionTitle
+          type="h1"
+          :class="{ 's_in-view': isMounted }"
+          :title="dev.title"
+        />
+        <div
+          class="mt-4 md:mt-6 lg:mt-8 font-normal text-lg leading-wider"
+          v-html="dev.content"
+        ></div>
+      </div>
     </div>
     <div
       class="w-full mt-4 relative z-10 rounded-md overflow-hidden flex-grow flex"
@@ -33,27 +41,29 @@
     >
       <div
         :class="[
-          'absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]',
-          imageHeight ? 'hidden' : ''
+          'absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] transition-opacity duration-400',
+          showImage ? 'opacity-[0]' : 'opacity-[1]'
         ]"
       >
         <div
           :class="[
             'w-[50px] h-[50px] bg-blue-mid rounded-[3px]',
-            imageHeight ? null : 'animate-bounceRectangle'
+            showImage ? null : 'animate-bounceRectangle'
           ]"
         ></div>
         <div
           :class="[
             'w-[50px] h-[5px] bg-darker opacity-[0.1] translate-y-[12px] rounded-[50%]',
-            imageHeight ? null : 'animate-bounceShadow'
+            showImage ? null : 'animate-bounceShadow'
           ]"
         ></div>
       </div>
       <div
         :class="[
-          'transition-all duration-400',
-          imageHeight ? 'opacity-1' : 'opacity-0'
+          'duration-400 bg-white',
+          showImage
+            ? 'opacity-[1] transition-opacity'
+            : 'opacity-[0] transition-all'
         ]"
         :style="{ height: `${imageHeight}px` }"
         ref="image"
@@ -168,7 +178,7 @@ export default {
       textHeight: null,
       isMounted: false,
       loading: true,
-      imageHeight: 0,
+      imageHeight: 200,
       dev: {
         title: null,
         content: null
@@ -198,11 +208,13 @@ export default {
       shadowTop: 25,
       fullShadowTop: 5,
       animating: false,
-      imageTimeout: 0
+      imageTimeout: 0,
+      resizeImageTimeout: 0,
+      showImage: false
     };
   },
   methods: {
-    setImageHeight() {
+    async setImageHeight(resize) {
       const { height } = this.$refs.image
         .querySelector("picture")
         .getBoundingClientRect();
@@ -211,6 +223,7 @@ export default {
         (height / (this.scale * 100)) * (this.fullScale * 100);
 
       this.imageHeight = scaledHeight;
+      this.showImage = true;
     },
     loadImage: async function() {
       const src = `/images/dev/${this.param}-full.webp`;
@@ -221,6 +234,7 @@ export default {
       // let the bouncer bounce =)
       this.imageTimeout = setTimeout(() => {
         this.setImageHeight();
+        window.addEventListener("resize", this.setImageHeight);
       }, 1000);
     },
     scrolling(e) {

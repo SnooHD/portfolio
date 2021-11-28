@@ -1,11 +1,7 @@
 <template>
   <div
     class="
-    lg:px-14
-    md:px-12 
-    sm:px-10
-    xs:px-8
-    px-6
+    
     font-galano
     text-gray-blue
     mds_layout
@@ -14,9 +10,9 @@
   >
     <nuxt
       class="
-        pb-4
-        sm:pb-6
-        md:pb-10
+        pt-4
+        sm:pt-6
+        md:pt-10
         xl:max-w-1100
         container
         mx-auto

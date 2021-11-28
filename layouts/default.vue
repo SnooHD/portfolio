@@ -1,17 +1,17 @@
 <template>
   <div
     class="
-    overflow-hidden
-    lg:px-14
-    md:px-12 
-    sm:px-10
-    xs:px-8
-    px-6
-    font-galano
-    text-gray-blue
-    mds_layout
-    bg-light
-  "
+      overflow-hidden
+      lg:px-14
+      md:px-12 
+      sm:px-10
+      xs:px-8
+      px-6
+      font-galano
+      text-gray-blue
+      mds_layout
+      bg-light
+    "
   >
     <!--
       $mq creates jump content due to the default breakpoint used from SSR

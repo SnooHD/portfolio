@@ -6,3 +6,5 @@ node_modules
 
 # Nuxt generate
 dist
+
+.DS_Store

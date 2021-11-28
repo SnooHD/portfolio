@@ -196,7 +196,7 @@ export default {
         },
         {
           property: "og:image",
-          content: "https://mikedesnoo.com/images/avatar.jpg"
+          content: "https://mikedesnoo.com/images/about/avatar.jpg"
         },
         {
           property: "og:url",

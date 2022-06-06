@@ -138,6 +138,8 @@ export default {
     sectionTitle
   },
   beforeRouteEnter(to, from, next) {
+    next("/");
+
     const routes = [
       "logopicker",
       "powrful",

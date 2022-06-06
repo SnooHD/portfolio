@@ -70,7 +70,7 @@
 export default {
   data() {
     return {
-      items: ["about", "dev", "design", "contact"]
+      items: ["about", "dev", "contact"]
     };
   },
   props: ["inView"],

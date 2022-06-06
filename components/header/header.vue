@@ -324,12 +324,12 @@ export default {
         return;
       }
 
-      if (
-        document.querySelector("#design h2").classList.contains("s_in-view")
-      ) {
-        this.inView = "design";
-        return;
-      }
+      // if (
+      //   document.querySelector("#design h2").classList.contains("s_in-view")
+      // ) {
+      //   this.inView = "design";
+      //   return;
+      // }
 
       this.inView = null;
     },

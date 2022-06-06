@@ -31,7 +31,7 @@ import "intersection-observer";
 import headerBlock from "~/components/header/header.vue";
 import intro from "~/components/intro/intro.vue";
 import dev from "~/components/dev/dev.vue";
-import design from "~/components/design/design.vue";
+//import design from "~/components/design/design.vue";
 import contact from "~/components/contact/contact.vue";
 
 export default {
@@ -39,7 +39,7 @@ export default {
     headerBlock,
     intro,
     dev,
-    design,
+    //design,
     contact
   },
   data() {
@@ -50,7 +50,7 @@ export default {
       animating: false,
       loaded: false,
       fontsLoaded: true,
-      sections: ["intro", "dev", "design", "contact"],
+      sections: ["intro", "dev", "contact"],
       headerImages: [],
       introImages: [
         {

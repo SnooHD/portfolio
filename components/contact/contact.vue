@@ -1,7 +1,7 @@
 <template>
   <section
     id="contact"
-    class="lg:px-4 px-0 mt-20 lg:mt-24 flex items-start flex-col justify-between relative z-0"
+    class="lg:px-4 px-0 mt-36 lg:mt-48 flex items-start flex-col justify-between relative z-0"
   >
     <section-title title="Contact" />
     <div
